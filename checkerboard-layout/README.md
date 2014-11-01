@@ -21,4 +21,4 @@ Sample Output
 Here is a screenshot of Firefox 33.0 displaying something by Lord Dunsany
 that was passed through this script:
 
-![screenshor][screenshot.png]
+![screenshot of Firefox 33.0 displaying output](screenshot.png)
