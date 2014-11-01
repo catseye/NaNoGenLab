@@ -12,5 +12,5 @@ Note that the word "experiment", like the word "novel", may mean many things.
 Everything in this repository is in the public domain; see the file
 UNLICENSE in the root directory for more information.
 
-[NaNoGenMo 2014]:           https://github.com/dariusk/NaNoGenMo-2014
-[Cat's Eye Technologies][]: http://catseye.tc/
+[NaNoGenMo 2014]:         https://github.com/dariusk/NaNoGenMo-2014
+[Cat's Eye Technologies]: http://catseye.tc/
