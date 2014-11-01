@@ -27,14 +27,20 @@ def main(argv):
 
     alphabet = list(set(''.join(texts)))
     average_length = sum([len(text) for text in texts]) / NUM_TEXTS
-    s = ''.join([random.choice(alphabet) for i in xrange(0, average_length)])
+    
+    seed_filename = argv[3]
+    if seed_filename == 'random':
+        s = ''.join([random.choice(alphabet) for i in xrange(0, average_length)])
+    else:
+        with open(seed_filename) as f:
+            s = ' '.join([l.strip() for l in f])
+
     avgdist, dists = get_average_distance(s, texts)
 
     print s, avgdist
 
     done = False
     d = [0] * NUM_TEXTS 
-    avgdist = 1000000
     while not done:
         k = s
         for m in xrange(0, avgdist):
