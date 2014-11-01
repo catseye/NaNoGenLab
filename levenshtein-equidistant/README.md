@@ -6,12 +6,12 @@ Requirements
 
 *   Python 2.7.6 (probably works with older versions too)
 *   [py-editdist](http://www.mindrot.org/projects/py-editdist/)
-*   Two input sentences
+*   Two input texts
 
 Basic Strategy
 --------------
 
-*   Input two texts.  Then senerate a random string of characters.
+*   Input two texts.  Then generate a random string of characters.
     Then keep mutating this string until its Levenshtein distance to
     text A is approximately equal to its Levenshtein distance to
     text B.  For efficiency,

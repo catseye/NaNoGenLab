@@ -5,7 +5,7 @@ Requirements
 ------------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   The `gutenberg.py` modules from [gutenizer](https://github.com/okfn/gutenizer/)
+*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   A bunch of Project Gutenberg texts in plain text format
 
 Basic Strategy
