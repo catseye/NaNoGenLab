@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import os
 import random
+import re
 from time import sleep
 
 from bs4 import BeautifulSoup
@@ -8,15 +10,21 @@ import requests
 
 
 def get_image_from_page(url):
-    # Doesn't work quite right yet
-    # http://commons.wikimedia.org/wiki/File:Aye-Aye_Mivart.png
-    # http://commons.wikimedia.org/wiki/File:Penelope_Boothby_by_Joshua_Reynolds.jpg
+    # We grab the original file.  It may be bigger than we need, but we can
+    # scale it down later.
+    img_filename = url.split(':')[-1]
     soup = BeautifulSoup(requests.get(url).content)
     orig_links = [link for link in soup.find_all('a')
-                  if link.get_text() == 'Original file']
+                  if link.get_text() in ('Original file', img_filename)]
     assert orig_links
-    image_url = orig_links[0].get('href')
-    print image_url
+    image_url = 'http:' + orig_links[0].get('href')
+    print '{0} --> {1}'.format(image_url, img_filename)
+
+    response = requests.get(image_url, stream=True)
+    if response.ok:
+        with open(img_filename, 'w') as f:
+            for block in response.iter_content(1024):
+                f.write(block)
 
 
 def main(argv):
@@ -48,6 +56,11 @@ def main(argv):
         with open(output_file, 'w') as f:
             for link in sorted(media_links):
                 f.write('http://commons.wikimedia.org' + link + '\n')
+
+    elif argv[1] == 'get':
+        media_url = argv[2]
+        get_image_from_page(media_url)
+
     else:
         raise KeyError('please read the source code')
 
