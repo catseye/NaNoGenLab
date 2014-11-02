@@ -11,8 +11,28 @@ Requirements
 Basic Strategy
 --------------
 
-*   Get URLs for all images from all pages of a Wikimedia category, e.g.
-    http://commons.wikimedia.org/wiki/Category:PD_Gutenberg
-    and write that list of URLs to an index file.
-*   (TODO) Select _n_ images randomly from that index and download them.
+*   Get URLs for all images from all pages of a Wikimedia Commons category,
+    such as "PD_Gutenberg" or "PD-Art_(PD-Japan)", and write that list of
+    URLs to an index file.
+*   Select _n_ images randomly from that index and download them.
 *   (TODO) Inject those images as illustrations in a given text.
+
+Usage
+-----
+
+NOTE 1: to stay (IMO) well within Wikimedia's [Terms of use](http://meta.wikimedia.org/wiki/Terms_of_use),
+this script sleeps for 8 seconds after making any major HTTP request.
+
+NOTE 2: just because an image is categorized as _public domain_ on Wikimedia
+Commons _does not_ mean it is in the public domain.
+
+    $ ./wikimedia-illustrations.py mkindex "PD-Art_(PD-Japan)"
+    http://commons.wikimedia.org/wiki/Category:PD-Art_(PD-Japan)
+    http://commons.wikimedia.org//w/index.php?title=Category:PD-Art_(PD-Japan)&filefrom=KitawakiI+Rioanji.jpg#mw-category-media
+    grabbed 2 category index pages
+    $ mkdir art
+    $ ./wikimedia-illustrations.py random 4 art/ Wikimedia-Commons-Category-index-PD-Art_\(PD-Japan\).txt
+    http://commons.wikimedia.org/wiki/File:Kawanabe_Kyosai_Renshishi2.jpg
+    http://upload.wikimedia.org/wikipedia/commons/1/10/Kawanabe_Kyosai_Renshishi2.jpg --> art/Kawanabe_Kyosai_Renshishi2.jpg
+    [...]
+    $ ristretto art/
