@@ -1,0 +1,6 @@
+syntax: glob
+
+*.goal
+*.jpg
+*.jp2
+*.pyc
