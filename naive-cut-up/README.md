@@ -81,4 +81,4 @@ Sample Output
 It may be difficult to tell in this scaled-down sample, but the result was
 surprisingly thematic in its reference to cheese:
 
-![Newspaper cut-up on the theme of cheese][sample-cheese.jpg]
+![Newspaper cut-up on the theme of cheese](sample-cheese.jpg)
