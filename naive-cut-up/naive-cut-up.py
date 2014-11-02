@@ -32,12 +32,23 @@ def load_image(filename):
 
 def main(argv):
     if argv[1] == 'fetch':
-        fetcher = ChronAm(argv[2])
+        amount = int(argv[2])
+        fetcher = ChronAm(argv[3])
         for x, item in enumerate(fetcher.fetch()):
-            download(item, x)
-            if x > 5:
+            if x == amount:
                 break
-        sys.exit(0)
+            download(item, x)
+
+    elif argv[1] == 'largest':
+        greatest = 0
+        greatest_filename = 'NONE'
+        for filename in argv[2:]:
+            image = load_image(filename)
+            size = image.size[0] * image.size[1]
+            if size > greatest:
+                greatest = size
+                greatest_filename = filename
+        print "LARGEST IS", greatest_filename
 
     elif argv[1] == 'cutup':
         base_filename = argv[2]
@@ -51,7 +62,7 @@ def main(argv):
         for filename in cutup_filenames:
             images.append(load_image(filename))
 
-        for n in xrange(0, 10):
+        for n in xrange(0, 100):
             image = random.choice(images)
             width = image.size[0]
             height = image.size[1]
@@ -59,16 +70,16 @@ def main(argv):
             crop_width = width / 3
             crop_height = height / 3
 
-            crop_box = (random.randint(0, width - crop_width),
-                        random.randint(0, height - crop_height),
-                        crop_width, crop_height)
-   
+            # note that for crop boxes, the 3rd and 4th elements are
+            # *positions*, not *dimensions*!
+            crop_x = random.randint(0, width - crop_width)
+            crop_y = random.randint(0, height - crop_height)
+            crop_box = (
+                crop_x, crop_y, crop_x + crop_width, crop_y + crop_height
+            )
             crop_region = image.crop(crop_box)
-            print image, crop_region
+            print image, crop_box, crop_region
 
-            # cannot seem to use a paste_box here for some reason;
-            # "ValueError: images do not match" (really helpful error message.)
-            # but then, there is no real need: topleft point seems to work
             paste_point = (random.randint(0, base_width - crop_width),
                            random.randint(0, base_height - crop_height))
             
@@ -78,7 +89,7 @@ def main(argv):
         base_image.save("output.png")
 
     else:
-        raise KeyError("no, you are wrong.  It must be `fetch` or `cutup`")
+        raise KeyError("First arg must be `fetch`, `largest`, or `cutup`")
 
 
 if __name__ == '__main__':
