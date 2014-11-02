@@ -25,7 +25,7 @@ Usage
 
 First, we tell it to fetch a few newspaper images that make reference to
 cheese, and convert them from JPEG-2000 to (easier to work with) PNGs.
-This shells ImageMagick to do the conversation.  ImageMagick probably wouldn't
+This shells ImageMagick to do the conversion.  ImageMagick probably wouldn't
 be required if I had built my install of Pillow with JPEG support; alas, I
 did not.
 

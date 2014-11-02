@@ -24,7 +24,8 @@ NOTE 1: to stay (IMO) well within Wikimedia's [Terms of use](http://meta.wikimed
 this script sleeps for 8 seconds after making any major HTTP request.
 
 NOTE 2: just because an image is categorized as _public domain_ on Wikimedia
-Commons _does not_ mean it is in the public domain.
+Commons _does not_ mean it is necessarily in the public domain.  It's always a
+good idea to double-check.
 
     $ ./wikimedia-illustrations.py mkindex "PD-Art_(PD-Japan)"
     http://commons.wikimedia.org/wiki/Category:PD-Art_(PD-Japan)

@@ -9,6 +9,7 @@ bowl
 box
 bucket
 can
+cannister
 carboy
 carton
 cask
@@ -36,5 +37,6 @@ pouch
 sack
 sachet
 trunk
+tumbler
 vessel
 vial
