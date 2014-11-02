@@ -1,8 +1,6 @@
 naive-cut-up
 ============
 
-_Not finished yet_
-
 Requirements
 ------------
 
