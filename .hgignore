@@ -3,4 +3,5 @@ syntax: glob
 *.goal
 *.jpg
 *.jp2
+*.png
 *.pyc
