@@ -79,6 +79,14 @@ def main(argv):
         local_filename = media_url.split(':')[-1]
         get_image_from_page(media_url, local_filename)
 
+    elif argv[1] == 'getmany':
+        with open(argv[2]) as f:
+            for line in f:
+                media_url = line.strip()
+                local_filename = media_url.split(':')[-1]
+                get_image_from_page(media_url, local_filename)
+                comply_with_terms_of_use()
+
     elif argv[1] == 'random':
         count = int(argv[2])
         dest_dir = argv[3]
