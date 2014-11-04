@@ -49,7 +49,7 @@ def main(argv):
         index_url = 'http://commons.wikimedia.org/wiki/Category:' + category
         output_file = 'Wikimedia-Commons-Category-index-%s.txt' % category
         media_links = set()
-        
+
         done = False
         count = 0
         while not done:
@@ -86,6 +86,20 @@ def main(argv):
                 local_filename = media_url.split(':')[-1]
                 get_image_from_page(media_url, local_filename)
                 comply_with_terms_of_use()
+
+    elif argv[1] == 'convertmany':
+        dest_dir = argv[2]
+        filenames = argv[3:]
+        for filename in filenames:
+            output_filename = os.path.join(
+                dest_dir, os.path.splitext(filename)[0] + '.png'
+            )
+            if os.path.exists(output_filename):
+                print "%s already exists, skipping" % output_filename
+                continue
+            command = "convert %s %s" % (filename, output_filename)
+            print command
+            os.system(command)
 
     elif argv[1] == 'random':
         count = int(argv[2])

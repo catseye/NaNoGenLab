@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from optparse import OptionParser
 import os
 import random
 import sys
@@ -8,8 +9,15 @@ from PIL import Image
 
 
 def main(argv):
-    base_filename = argv[1]
-    cutup_filenames = argv[2:]
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--total-strips", default='3000',
+                         help="total number of strips to lay down")
+    optparser.add_option("--lines-per-page", default='80',
+                         help="average height of a strip is 1 over this")
+    (options, args) = optparser.parse_args(argv[1:])
+
+    base_filename = args[0]
+    cutup_filenames = args[1:]
     
     base_image = Image.open(base_filename)
     base_width = base_image.size[0]
@@ -24,11 +32,11 @@ def main(argv):
         print image
         images.append(image)
 
-    for n in xrange(0, 5000):
+    for n in xrange(0, int(options.total_strips)):
         image = random.choice(images)
 
         crop_width = int(base_width / (2 + (random.random() * 3)))
-        crop_height = int(base_height / 80.0)
+        crop_height = int(base_height / (float(options.lines_per_page)))
 
         # note that for crop boxes, the 3rd and 4th elements are
         # *positions*, not *dimensions*!
