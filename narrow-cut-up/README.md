@@ -23,5 +23,10 @@ We can use images fetched by naive-cut-up.
 
     $ ./narrow-cut-up.py ../naive-cut-up/ca_5.jp2.png ../naive-cut-up/pages/*
 
+Sample Output
+-------------
+
 The result has promise, but looks like it might work best with pages
-which contain more text than images.  Screenshot forthcoming.
+which contain more text than images.
+
+![Newspaper cut-up on the theme of cheese](sample-cheese.jpg)
