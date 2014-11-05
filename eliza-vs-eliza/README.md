@@ -14,6 +14,10 @@ Basic Strategy
 --------------
 
 *   Put two instances of Eliza into mutual livelock to create dialogue.
+    This was sort of inspired by
+    [Redwreath and Goldstar Have Traveled to Deathsgate](https://github.com/dariusk/NaNoGenMo/issues/10)
+    because I thought two-bots-in-livelock was what that was until it
+    was explained to me that wasn't what it was.
 
 Sample Output
 -------------

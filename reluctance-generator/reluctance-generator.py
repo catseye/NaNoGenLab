@@ -49,7 +49,11 @@ def verb_phrase():
 
 def qualifiers():
     # we can't do the random.choice thing here because Python has eager
-    # evaluation.  TODO: write a version of this in Haskell
+    # evaluation.  Well, I tried to write a version of this in Haskell,
+    # but due to the fact that it needs monads for random numbers, I wasn't
+    # able to write this any more nicely.  I might be able to if my
+    # monad-fu wasn't so sucky, but I'd much rather TODO: write some sort of
+    # custom evaluator that lazily evaluates probabilistic grammars!
     i = random.randint(1, 6)
     if i == 1:
         return ["just", qualifiers()]
