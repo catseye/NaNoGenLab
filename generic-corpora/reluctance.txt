@@ -1,0 +1,37 @@
+# "I'm (just) not sure" | "I (just) don't know" | "I (just) don't think"
+# "" | "about this" | "(if) this is (such) a good idea"
+
+I'm not sure.
+I'm not sure about this.
+I'm not sure this is a good idea.
+I'm not sure if this is a good idea.
+I'm not sure this is such a good idea.
+I'm not sure if this is such a good idea.
+
+I don't know.
+I don't know about this.
+I don't know this is a good idea.*
+I don't know if this is a good idea.
+I don't know this is such a good idea.*
+I don't know if this is such a good idea.
+
+I don't think.*
+I don't think about this.*
+I don't think this is a good idea.
+I don't think if this is a good idea.*
+I don't think this is such a good idea.
+I don't think if this is such a good idea.*
+
+Are you sure?
+Are you sure about this?
+Are you sure this is a good idea?
+Are you sure if this is a good idea?
+Are you sure this is such a good idea?
+Are you sure if this is such a good idea?
+
+Do you think?*
+Do you think about this?*
+Do you think this is a good idea?
+Do you think if this is a good idea?*
+Do you think this is such a good idea?
+Do you think if this is such a good idea?*
