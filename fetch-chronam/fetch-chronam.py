@@ -9,7 +9,12 @@ import requests
 
 
 def comply_with_terms_of_use():
-    # don't know what the exact terms of use are yet, but trying to be nice.
+    # http://www.loc.gov/legal says they reserve the right to block anyone
+    # who negatively impacts their service (fair enough) and recommend that
+    # consumers make no more than 10 requests per minute.  If my arithmetic
+    # is correct, that's one request every 6 seconds.  Considering that
+    # we spend a considerable amount of time in `convert` too, this sleep
+    # is generous.
     from time import sleep
     sleep(10)
 
