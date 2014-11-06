@@ -5,6 +5,7 @@ Requirements
 ------------
 
 *   Python 2.7.6 (probably works with older versions too)
+*   [requests](http://docs.python-requests.org/)
 *   [chroniclingamerica.py](https://github.com/hugovk/chroniclingamerica.py)
 *   ImageMagick
 
@@ -16,7 +17,8 @@ Basic Strategy
     *   downloading _n_ scanned images from the search results
     *   converting them from JPEG-2000 to PNG format
 
-This was extracted from [naive-cut-up](../naive-cut-up/).
+This code was originally in [naive-cut-up](../naive-cut-up/), from whence it
+was extracted.
 
 Usage
 -----
