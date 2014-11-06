@@ -37,3 +37,11 @@ good idea to double-check.
     http://upload.wikimedia.org/wikipedia/commons/1/10/Kawanabe_Kyosai_Renshishi2.jpg --> art/Kawanabe_Kyosai_Renshishi2.jpg
     [...]
     $ ristretto art/
+
+TODO
+----
+
+Add a flag that looks for the "guaranteed public domain" text on the media
+page and only downloads if it finds it.
+
+Create a Markdown or HTML file with boilerplate text and embedded illustrations.
