@@ -4,24 +4,7 @@ import os
 import random
 import sys
 
-from chroniclingamerica import ChronAm
 from PIL import Image
-import requests
-
-
-def download(item, local_id):
-    url = 'http://chroniclingamerica.loc.gov/%s.jp2' % item['id'][:-1]
-    local_filename = 'ca_%s.jp2' % local_id
-    print '{0} --> {1}'.format(url, local_filename)
-    response = requests.get(url, stream=True)
-    if response.ok:
-        with open(local_filename, 'w') as f:
-            for block in response.iter_content(1024):
-                f.write(block)
-    new_filename = local_filename + '.png'
-    print 'convert {0} {1}'.format(local_filename, new_filename)
-    os.system("convert {0} {1}".format(local_filename, new_filename))
-    print 'done!'
 
 
 def load_image(filename):
@@ -31,15 +14,7 @@ def load_image(filename):
 
 
 def main(argv):
-    if argv[1] == 'fetch':
-        amount = int(argv[2])
-        fetcher = ChronAm(argv[3])
-        for x, item in enumerate(fetcher.fetch()):
-            if x == amount:
-                break
-            download(item, x)
-
-    elif argv[1] == 'largest':
+    if argv[1] == 'largest':
         greatest = 0
         greatest_filename = 'NONE'
         for filename in argv[2:]:
@@ -89,7 +64,7 @@ def main(argv):
         base_image.save("output.png")
 
     else:
-        raise KeyError("First arg must be `fetch`, `largest`, or `cutup`")
+        raise KeyError("First arg must be `largest` or `cutup`")
 
 
 if __name__ == '__main__':

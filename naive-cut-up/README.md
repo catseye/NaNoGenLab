@@ -5,17 +5,15 @@ Requirements
 ------------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   ImageMagick
 *   [Pillow](http://python-pillow.github.io/) (it might work with PIL too)
-*   Some scanned images of newspapers, books, etc. (or it can use
-    [chroniclingamerica.py](https://github.com/hugovk/chroniclingamerica.py)
-    to fetch some)
+*   Some scanned images of newspapers, books, etc., in PNG format, for example
+    obtained by [fetch-chronam](../fetch-chronam/)
 
 Basic Strategy
 --------------
 
 *   Start with "blank" canvas.  For simplicity, we actually use one of the
-    newspaper images as the "canvas".
+    input images as the "canvas".
 *   Pick a source image.  Pick a rectangle within that image.
 *   Copy the image within the rectangle to a random location on the canvas.
 *   Repeat from step 2 until we guess we've covered the canvas.
@@ -23,23 +21,12 @@ Basic Strategy
 Usage
 -----
 
-First, we tell it to fetch a few newspaper images that make reference to
-cheese, and convert them from JPEG-2000 to (easier to work with) PNGs.
-This shells ImageMagick to do the conversion.  ImageMagick probably wouldn't
-be required if I had built my install of Pillow with JPEG support; alas, I
-did not.
+First, we assume some PNGs of scanned newspaper pages involving some topic
+(in this example, cheese) have been obtained.  (PNG format is probably not
+a strict requirement; if I had built my install of Pillow with JPEG support
+I could probably load in JPEGs directly.  Alas, I did not.)
 
-    $ ./naive-cut-up.py fetch 20 cheese
-    Fetching page 1 of 30656 ... 0.003262%
-    http://chroniclingamerica.loc.gov//lccn/sn83045487/1917-04-03/ed-2/seq-15.jp2 --> ca_0.jp2
-    convert ca_0.jp2 ca_0.jp2.png
-    done!
-    http://chroniclingamerica.loc.gov//lccn/sn83045487/1917-04-03/ed-1/seq-15.jp2 --> ca_1.jp2
-    convert ca_1.jp2 ca_1.jp2.png
-    done!
-    [...]
-
-Then reorganize these files a little and find the largest one:
+Then we reorganize these files a little and find the largest one:
 
     $ mkdir pages
     $ mv *.png pages/
