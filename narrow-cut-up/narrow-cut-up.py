@@ -20,8 +20,7 @@ def main(argv):
     cutup_filenames = args[1:]
     
     base_image = Image.open(base_filename)
-    base_width = base_image.size[0]
-    base_height = base_image.size[1]
+    (base_width, base_height) = base_image.size
     print base_image
 
     images = [base_image]
