@@ -17,6 +17,9 @@ def main(argv):
 
     (width, height) = image.size
 
+    # FIXME: iteratively look for too-dark rectangles around the edge of
+    # the image and remove them one by one instead.  but this is OK for now
+
     margin_left = int(width * 0.05)
     margin_right = int(width * 0.95)
     margin_top = int(height * 0.05)
@@ -28,6 +31,10 @@ def main(argv):
     (width, height) = image.size
 
     light_rows = []
+
+    # FIXME: throw the image through an (almost-)max-contrast filter first;
+    # that should make it easier to work on a wide range of images of varying
+    # contrast levels
 
     for y in xrange(0, height):
         if y % 100 == 0:
@@ -65,12 +72,42 @@ def main(argv):
             previous_light_y = None
             cuttable_ribbons.append((start_y, thickness))
 
-    for ribbon in cuttable_ribbons:
-        for y in xrange(ribbon[0], ribbon[0] + ribbon[1]):
-            for x in xrange(0, width):
-                image.putpixel((x, y), 0)
+    # reduce ribbon thicknesses
+    margin = 4  # how much whitespace you want around darkpixelness?
+    cuttable_ribbons = [
+        (start_y + margin, thickness - margin * 2)
+        for (start_y, thickness) in cuttable_ribbons
+        if thickness > margin * 2
+    ]
+    # FIXME: we could / should retain the insufficiently-thick ones?
 
-    image.save("output.png")
+    if False:
+        print cuttable_ribbons
+        for ribbon in cuttable_ribbons:
+            for y in xrange(ribbon[0], ribbon[0] + ribbon[1]):
+                for x in xrange(0, width):
+                    image.putpixel((x, y), 0)
+
+    # compute the crop-areas BETWEEN the cuttable ribbons
+    crop_y = 0
+    crop_areas = []
+
+    for (start_y, thickness) in cuttable_ribbons:
+        crop_areas.append(
+            (0, crop_y, width, start_y)
+        )
+        crop_y = start_y + thickness
+
+    crop_areas.append(
+        (0, crop_y, width, height)
+    )
+
+    for (crop_num, crop_area) in enumerate(crop_areas):
+        region = image.crop(crop_area)
+        print "writing %s to crop%s.png" % (crop_area, crop_num)
+        region.save("crop%s.png" % crop_num)
+
+    #image.save("output.png")
 
 
 if __name__ == '__main__':
