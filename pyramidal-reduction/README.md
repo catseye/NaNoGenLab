@@ -1,14 +1,19 @@
 pyramidal-reduction
 ===================
 
-Requirements
-------------
+Hypothesis
+----------
+
+Can we transform a text by building rewriting rules for it on-the-fly?
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   An input sentence
 
-Basic Strategy
---------------
+Method
+------
 
 *   For each pair of symbols in the input sentence, use a rule to reduce
     them to a single symbol.  This results in a sentence which is one

@@ -1,13 +1,18 @@
 reluctance-generator
 ====================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that it is possible to make a computer sound reluctant.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Use a "recursive descent generator" to generate statements suggesting
     reluctance.  This is like a recursive descent parser, but run "in reverse."
@@ -18,8 +23,8 @@ Basic Strategy
     it will not mind at all creating sentences after which a linguist would
     be inclined to put an asterisk.
 
-Sample Output
--------------
+Observations
+------------
 
     $ ./reluctance-generator.py 
     I don't think .

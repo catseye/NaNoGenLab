@@ -1,20 +1,25 @@
 narrative-makefile
 ==================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We can generate a story using only `make`.
+
+Apparatus
+---------
 
 *   GNU Make (other makes might work too)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Each point in the narrative is a goal, and may require other goals to
     be met, before it can be met.
 *   Each goal outputs some text as a side-effect.
 
-Sample Output
--------------
+Observations
+------------
 
     $ make
     Once upon a time there was a brave knight.

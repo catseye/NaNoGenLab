@@ -1,15 +1,22 @@
 poetic-inventory
 ================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that it is possible to extract phrases from public-domain novels
+and alphabetize them.  Well, I suppose we also hypothesize that, with enough
+input texts, the final result may look like an interesting inventory of things.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   A bunch of Project Gutenberg texts in plain text format
 
-Basic Strategy
---------------
+Method
+------
 
 *   Find all phrases which are neither "beginners" nor "enders" in the sense
     of [join-at-pivot](../join-at-pivot/).
@@ -18,8 +25,10 @@ Basic Strategy
 *   Dump out those phrases, capitalizing the first word and replacing each
     semicolon with a full stop and a paragraph break.
 
-Sample Output
--------------
+Observations
+------------
+
+(The list of input texts that produced this TBA.)
 
 > A 5.9, a Believer, a Bible, a Biscay lady on her way to Seville, a Biscayan, a Blackbird, a Bonanza King, a Bricklayer passed by, a British aÃ«roplane, a Carabineer* happened along, a Castilian, a Castilian, a Cervantes Saavedra, a Cheese Committee to consist of seven members of the Exchange, a Cheese Inspector and also a Deputy Inspector, a Chicago millionaire, a Chinaman, a Chinese body-servant, a Christian, a Colonial trader, a Crow, a Curious Thing.
 > 

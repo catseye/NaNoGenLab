@@ -1,15 +1,21 @@
 levenshtein-equidistant
 =======================
 
-Requirements
-------------
+Hypothesis
+----------
+
+I expect that if I carry out this experiment, I will discover that I was
+not quite sure what I was expecting.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   [py-editdist](http://www.mindrot.org/projects/py-editdist/)
 *   Two or three input texts
 
-Basic Strategy
---------------
+Method
+------
 
 *   Input two reference texts.  Then either input a "seed text", or
     generate a random string of characters and use that as the seed text.
