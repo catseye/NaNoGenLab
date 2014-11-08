@@ -160,3 +160,49 @@ and the other which lists every combination of 279 words, without
 repetition, from a set of 281 words!
 
 What a great idea, if only it wasn't COMPLETELY WRONG.
+
+You see, C(n,r) and P(n,r) give you the number of *ways* you can pick _r_
+items out of _n_.  If you actually *pick* those _r_ items in all those
+ways, you get r **times** C(n,r) and r **times** P(n,r).
+
+Luckily it's not a complicated change to the code:
+
+    $ ./perm-comb-finder.py --top=500
+    best: r*P(159,2) = 50244                                                
+    best: r*P_duplicates(159,2) = 50562.0                                   
+    best: r*C(225,2) = 50400                                                
+    best: r*C_duplicates(224,2) = 50400                                     
+
+Ick.  Bump _r_ up, please?
+
+    $ ./perm-comb-finder.py --top=300 --minimum-r=4
+    best: r*P(13,4) = 68640                                                 
+    best: r*P_duplicates(11,4) = 58564.0                         
+    best: r*C(225,224) = 50400                                              
+    best: r*C_duplicates(22,4) = 50600                                      
+
+Still pretty ick.  Memoize and search for addition-pairs, please?
+
+    $ ./perm-comb-finder.py --top=300 --minimum-r=3 --memoize
+    best: r*P(27,3) = 52650                                                 
+    best: r*P_duplicates(26,3) = 52728.0                         
+    best: r*C(225,224) = 50400                                              
+    best: r*C_duplicates(22,4) = 50600                                      
+    
+    48 + 49952 == 50000
+    48: [('r*C', 48, 48)]
+    49952: [('r*C', 224, 223)]
+    
+    49952 + 48 == 50000
+    49952: [('r*C', 224, 223)]
+    48: [('r*C', 48, 48)]
+    
+    46010 + 3990 == 50000
+    46010: [('r*C', 215, 214)]
+    3990: [('r*C', 21, 3), ('r*C', 21, 19), ('r*C_duplicates', 19, 3)]
+    
+    3990 + 46010 == 50000
+    3990: [('r*C', 21, 3), ('r*C', 21, 19), ('r*C_duplicates', 19, 3)]
+    46010: [('r*C', 215, 214)]
+
+Sigh.  It will have to do.

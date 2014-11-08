@@ -35,6 +35,11 @@ def C_duplicates(n, r):
     return factorial(n + r - 1) / (factorial(r) * factorial(n - 1))
 
 
+# C and R are *how many ways*; this is *how many things* in those ways
+def times_r(f):
+    return lambda n, r: f(n, r) * r
+
+
 TARGET = 50000
 MIN_R = 1
 memo = {}
@@ -78,20 +83,37 @@ def main(argv):
     MEMOIZE = options.memoize
     options.top = int(options.top)
 
-    (best, n, r) = find('P', P, options.top)
-    print "best: P(%s,%s) = %s" % (n, r, best)
+    if False:
+        (best, n, r) = find('P', P, options.top)
+        print "best: P(%s,%s) = %s" % (n, r, best)
+        
+        (best, n, r) = find('fact', lambda n, r: P(n, n), options.top)
+        print "best: P(%s,%s) = %s" % (n, n, best)
+        
+        (best, n, r) = find('P_duplicates', P_duplicates, options.top)
+        print "best: P_duplicates(%s,%s) = %s" % (n, r, best)
+        
+        (best, n, r) = find('C', C, options.top)
+        print "best: C(%s,%s) = %s" % (n, r, best)
+        
+        (best, n, r) = find('C_duplicates', C_duplicates, options.top)
+        print "best: C_duplicates(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find('fact', lambda n, r: P(n, n), options.top)
-    print "best: P(%s,%s) = %s" % (n, n, best)
+    (best, n, r) = find('r*P', times_r(P), options.top)
+    print "best: r*P(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find('P_duplicates', P_duplicates, options.top)
-    print "best: P_duplicates(%s,%s) = %s" % (n, r, best)
+    # does not make much sense
+    #(best, n, r) = find('fact', times_r(lambda n, r: P(n, n)), options.top)
+    #print "best: P(%s,%s) = %s" % (n, n, best)
 
-    (best, n, r) = find('C', C, options.top)
-    print "best: C(%s,%s) = %s" % (n, r, best)
+    (best, n, r) = find('r*P_duplicates', times_r(P_duplicates), options.top)
+    print "best: r*P_duplicates(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find('C_duplicates', C_duplicates, options.top)
-    print "best: C_duplicates(%s,%s) = %s" % (n, r, best)
+    (best, n, r) = find('r*C', times_r(C), options.top)
+    print "best: r*C(%s,%s) = %s" % (n, r, best)
+
+    (best, n, r) = find('r*C_duplicates', times_r(C_duplicates), options.top)
+    print "best: r*C_duplicates(%s,%s) = %s" % (n, r, best)
 
     if options.memoize:
         print

@@ -11,11 +11,21 @@ except ImportError:
         return x
 
 
-# This would be a great idea, if only it wasn't COMPLETELY WRONG.
+# 46010 + 3990 == 50000
+# 46010: [('r*C', 215, 214)]
+# 3990: [('r*C', 21, 3), ('r*C', 21, 19), ('r*C_duplicates', 19, 3)]
+
+# note that:
+#   len(combinations(21, 3)) == 1330
+#   len(combinations(21, 19)) == 210
+#   len(combinations(215, 2)) == 23005
+#   len(combinations(215, 214)) == 215
+# and that 
+# 23005 / 1330.0 = 17.296992481203006
 
 
-PART1 = ['word%s' % (x+1) for x in xrange(0, 41)]
-PART2 = ['word%s' % (x+1) for x in xrange(0, 281)]
+PART1 = ['word%s' % (x+1) for x in xrange(0, 21)]
+PART2 = ['word%s' % (x+1) for x in xrange(0, 215)]
 
 PART1 = [
     'pascal',
@@ -41,37 +51,15 @@ PART1 = [
     'riddle',
     'ramble',
     'rarity',
-
-    'quail',
-    'question',
-    'quicken',
-    'quibble',
-    'quiz',
-    'quandry',
-    'quadrangle',
-
-    'merry',
-    'malicious',
-    'mincemeat',
-    'marmelade',
-    'milky',
-    'marmoset',
-    'millimeter',
-    
-    'careless',
-    'creamy',
-    'celestial',
-    'cerulean',
-    'cirrus',
-    'coccyx',
 ]
 
 
 def main(argv):
-    assert len(PART1) == 41
-    assert len(PART2) == 281
+    assert len(PART1) == 21
+    assert len(PART2) == 215
     with open(argv[1], 'w') as f:
-        for (part, r) in ((PART1, 38), (PART2, 279)):
+        for (part, r) in ((PART1, 19), (PART2, 214)):
+            print len(list(combinations(part, r)))
             for c in tqdm(combinations(part, r)):
                 f.write(' '.join(c).capitalize() + '.\n\n')
 
