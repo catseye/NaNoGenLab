@@ -155,6 +155,8 @@ the results are more interesting.
     49770: [('C', 316, 314)]
 
 Now to actually generate a novel in two parts: one which lists every
-combination of 38 words, without repetition, from a set of 48 words,
+combination of 38 words, without repetition, from a set of 41 words,
 and the other which lists every combination of 279 words, without
 repetition, from a set of 281 words!
+
+What a great idea, if only it wasn't COMPLETELY WRONG.
