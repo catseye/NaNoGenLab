@@ -39,6 +39,7 @@ class Memory(ReferentialEvent):
 
 
 def render_toplevel(event):
+    # so much for object-orientation!
     starting_at = event
     mentioned = set([starting_at])
 
@@ -47,7 +48,7 @@ def render_toplevel(event):
     if isinstance(event, Prediction):
         return (
             '%s turned to %s and asked, '
-            '"%s, do you think we will ever %s?"  '
+            '"%s, do you think that one day we will %s?"  '
             '"I don\'t know, %s," said %s.' % (
                 a, b, b,
                 render(event.target_event, starting_at, mentioned, tense='future'),
@@ -71,21 +72,21 @@ def render_toplevel(event):
 
 
 def render(event, starting_at, mentioned, tense='past'):
-    # so much for object-orientation
-    if not event:
-        return 'nothing at all'
-
-    if starting_at == event:
-        return 'this moment'
-
-    if event in mentioned:
-        return 'that moment'  # hard to be more specific!
-
-    mentioned = mentioned | set([event])  # note that we do not modify the shared set
+    assert event, "you should have filtered these out already you nincompoop"
 
     wonder = 'wondered' if tense == 'past' else 'wonder'
     remember = 'remembered' if tense == 'past' else 'remember'
     see = 'saw' if tense == 'past' else 'see'
+    experience = 'experienced' if tense == 'past' else 'experience'
+
+    # this is kind of a bodge to deal with NON-TERMINATING RECURSIVE DEJA VU
+    if starting_at == event:
+        return '%s this moment' % experience
+    if event in mentioned:
+        # hard to be more specific than this!
+        return '%s that moment' % experience
+
+    mentioned = mentioned | set([event])  # note that we do not modify the shared set
 
     if isinstance(event, Prediction):
         return (
@@ -108,11 +109,16 @@ def render(event, starting_at, mentioned, tense='past'):
 
 
 def main(argv):
+    length = int(argv[1])
+
     possibilities = (
         Prediction, Prediction, Memory, Memory, Sighting
     )
-    timeline = [random.choice(possibilities)() for x in xrange(0, 50)]
-    
+    timeline = [random.choice(possibilities)() for x in xrange(0, length)]
+
+    # FOR TESTING
+    # timeline = [Prediction(), Memory()]
+
     while isinstance(timeline[0], Memory):
         timeline = timeline[1:]
 
