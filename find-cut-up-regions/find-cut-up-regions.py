@@ -60,6 +60,7 @@ def cutup(filename, options):
             #    image.putpixel((x, y), 128)
 
     if options.debug:
+        print "saving contrast file"
         contrast.save(os.path.join(dirname, "contrast.png"))
 
     cuttable_ribbons = []  # list of (y, thickness) tuples
@@ -119,7 +120,7 @@ def cutup(filename, options):
 
 def main(argv):
     optparser = OptionParser(__doc__)
-    optparser.add_option("--debug", action='store_true', default='False',
+    optparser.add_option("--debug", action='store_true', default=False,
                          help="output debuging info")
     (options, args) = optparser.parse_args(argv[1:])
 
