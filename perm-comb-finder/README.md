@@ -109,7 +109,7 @@ more interesting.  Let's try _r_ = 4, 5, and 6:
     $ ./perm-comb-finder.py --minimum-r=5 --top=500
     best: P(11,5) = 55440                                                   
     best: P(9,9) = 362880                                                   
-    best: P_duplicates(9,5) = 59049.0                                       
+    best: P_duplicates(9,5) = 59049.0                             
     best: C(317,315) = 50086                                                
     best: C_duplicates(13,7) = 50388                                        
 
@@ -123,11 +123,38 @@ more interesting.  Let's try _r_ = 4, 5, and 6:
 Of these, C_duplicates(13,7) might be the most interesting, but technically
 C(317,315) is still the winner.
 
-Future Work
------------
+### But I want _exactly_ 50,000 words! ###
 
-For more fun, maybe let it be the sum of two permutations?  (Or a permutation
-and a combination, etc. etc.)
+If we are willing to have our novel consist of two parts using two different
+combinatoric strategies, we can satisfy our original goal of having exactly
+50,000 words in it by trying all these values and finding two that add up
+to 50,000 with the `--memoize` option.  We can set a minimum _r_ too so that
+the results are more interesting.
 
-Actually go get n (225) words and dump all permutations of r (2) of those
-words out to a text file.  But maybe not until it's exactly 50,000.
+    $ ./perm-comb-finder.py --top=500 --memoize --minimum-r=4
+    best: P(11,5) = 55440                                                   
+    best: P(9,9) = 362880                                                   
+    best: P_duplicates(15,4) = 50625.0                                      
+    best: C(317,315) = 50086                                                
+    best: C_duplicates(13,7) = 50388                                        
+    
+    10660 + 39340 == 50000
+    10660: [('C', 41, 38)]
+    39340: [('C', 281, 279)]
+    
+    39340 + 10660 == 50000
+    39340: [('C', 281, 279)]
+    10660: [('C', 41, 38)]
+    
+    49770 + 230 == 50000
+    49770: [('C', 316, 314)]
+    230: [('C', 230, 229)]
+    
+    230 + 49770 == 50000
+    230: [('C', 230, 229)]
+    49770: [('C', 316, 314)]
+
+Now to actually generate a novel in two parts: one which lists every
+combination of 38 words, without repetition, from a set of 48 words,
+and the other which lists every combination of 279 words, without
+repetition, from a set of 281 words!
