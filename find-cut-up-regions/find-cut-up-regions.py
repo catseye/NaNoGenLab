@@ -18,16 +18,14 @@ def mkdir_p(path):
 # TODO: scale all source images to same size first
 
 
-def cutup(filename, options, subdir, rotation=None):
+def cutup(options, filename, dirname, prefix='', rotation=None):
     """Returns list of output filenames"""
     image = Image.open(filename)
     if rotation is not None:
         image = image.rotate(rotation, expand=True)
     print filename, image
-    dirname = os.path.basename(filename) + '.dir'
 
     mkdir_p(dirname)
-    mkdir_p(os.path.join(dirname, subdir))
 
     (width, height) = image.size
 
@@ -131,7 +129,12 @@ def cutup(filename, options, subdir, rotation=None):
         if rotation is not None:
             # rotate BACK
             region = region.rotate(-1 * rotation, expand=True)
-        output_filename = os.path.join(dirname, subdir, "strip_%s.png" % crop_num)
+        if rotation is not None:
+            # try to deal with ANNOYING BLACK BARS on left and top
+            region = region.crop((1, 1, region.size[0], region.size[1]))
+        output_filename = os.path.join(
+            dirname, "%s_cut_%s.png" % (prefix, crop_num)
+        )
         print "writing %s to %s" % (crop_area, output_filename)
         region.save(output_filename)
         output_filenames.append(output_filename)
@@ -146,9 +149,18 @@ def main(argv):
     (options, args) = optparser.parse_args(argv[1:])
 
     for filename in args:
-        strip_filenames = cutup(filename, options, 'strips')
+        dirname = os.path.basename(filename) + '.dir'
+        mkdir_p(dirname)
+        strips_dirname = os.path.join(dirname, 'strips')
+        mkdir_p(strips_dirname)
+        strip_filenames = cutup(options, filename, strips_dirname)
+        chunks_dirname = os.path.join(dirname, 'chunks')
+        mkdir_p(chunks_dirname)
         for strip_filename in strip_filenames:
-            chunk_filenames = cutup(strip_filename, options, 'chunks', rotation=90)
+            chunk_filenames = cutup(
+                options, strip_filename, chunks_dirname,
+                prefix=os.path.basename(strip_filename), rotation=90
+            )
 
 
 if __name__ == '__main__':
