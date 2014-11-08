@@ -8,14 +8,12 @@ import sys
 from PIL import Image
 
 
-def main(argv):
-    optparser = OptionParser(__doc__)
-    optparser.add_option("--debug", action='store_true', default='False',
-                         help="output debuging info")
-    (options, args) = optparser.parse_args(argv[1:])
-
-    image = Image.open(args[0])
+def cutup(filename, options):
+    image = Image.open(filename)
     print image
+    dirname = os.path.basename(filename) + '.dir'
+
+    os.mkdir(dirname)
 
     (width, height) = image.size
 
@@ -62,7 +60,7 @@ def main(argv):
             #    image.putpixel((x, y), 128)
 
     if options.debug:
-        contrast.save("contrast.png")        
+        contrast.save(os.path.join(dirname, "contrast.png"))
 
     cuttable_ribbons = []  # list of (y, thickness) tuples
     thickness = None
@@ -113,10 +111,20 @@ def main(argv):
     for (crop_num, crop_area) in enumerate(crop_areas):
         region = image.crop(crop_area)
         print "writing %s to crop%s.png" % (crop_area, crop_num)
-        region.save("crop%s.png" % crop_num)
+        region.save(os.path.join(dirname, "crop%s.png" % crop_num))
 
     if options.debug:
-        image.save("output.png")
+        image.save(os.path.join(dirname, "cutlines.png"))
+
+
+def main(argv):
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--debug", action='store_true', default='False',
+                         help="output debuging info")
+    (options, args) = optparser.parse_args(argv[1:])
+
+    for filename in args:
+        cutup(filename, options)
 
 
 if __name__ == '__main__':
