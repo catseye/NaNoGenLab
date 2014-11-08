@@ -8,8 +8,11 @@ Say we want to produce a NaNoGenMo entry with _exactly_ 50,000 words,
 and we want to produce it using only permutations or combinations,
 with duplicates allowed or not, of _r_ words out of _n_ input words.  What
 method and what values of _n_ and _r_ should we get as close to 50,000 words
-(without going under) as possible?  (This should exclude trivial solutions
-like P(50000, 1).)
+(without going under) as possible?
+
+This should exclude trivial solutions like P(50000, 1).  And, assuming this
+novel will be in "sentences" of _r_ words, what results do we get if we
+insist on a high _r_?
 
 OK so my actualy hypothesis is that I can get a computer to brute-force its
 way through these numbers so I don't have to do anything hard like write
@@ -61,8 +64,10 @@ This is not quite as good as P(225, 2) and would probably produce a fairly
 uninteresting text too (kind of like counting in base 15, unless it was
 scrambled up somehow.)
 
-Raising _n_ higher results in OverflowErrors (srsly, Python? thought you had
-bignums, dude) but probably wouldn't get us anywhere.
+After writing some code to catch OverflowErrors (srsly, Python? thought you had
+bignums, dude) I ran it for _n_ up to 800 and found that P_duplicates(224,2) =
+50176.  OK, also not a surprise given the square root is around 223.  Again,
+not sure how interesting such a text would be, although that may not matter.
 
 ### C (combinations without repetitions) ###
 
@@ -73,6 +78,50 @@ Not bad, very close.
 
 When looking at _n_ up to 500, the best result was C_duplicates(316, 2) = 50086.
 Again, not bad.
+
+### Nuts to this!  I want bigger _r_'s! ###
+
+You will note that the value of _r_ in the above results is often 2, which
+suggests our novel would be a series of pairs of things, which sounds pretty
+boring no matter which way you slice it.  What if we insist _r_ is larger?
+
+Here are some results for _r_ = 3 and maximum _n_ in all cases is 500:
+
+    $ ./perm-comb-finder.py --minimum-r=3 --top=500
+    best: P(38,3) = 50616                                                   
+    best: P(9,9) = 362880                                                   
+    best: P_duplicates(15,4) = 50625.0                                      
+    best: C(317,315) = 50086                                                
+    best: C_duplicates(66,3) = 50116                                        
+
+Interesting to note that the best _r_ for C becomes a whopping 315, but that
+is just due to the symmetrical nature of C (I blame Pascal's Triangle.)
+50,086 is still our overall winner, but C_duplicates(66, 3) might arguably be
+more interesting.  Let's try _r_ = 4, 5, and 6:
+
+    $ ./perm-comb-finder.py --minimum-r=4 --top=500
+    best: P(11,5) = 55440                                                   
+    best: P(9,9) = 362880                                                   
+    best: P_duplicates(15,4) = 50625.0                                      
+    best: C(317,315) = 50086                                                
+    best: C_duplicates(13,7) = 50388                                        
+
+    $ ./perm-comb-finder.py --minimum-r=5 --top=500
+    best: P(11,5) = 55440                                                   
+    best: P(9,9) = 362880                                                   
+    best: P_duplicates(9,5) = 59049.0                                       
+    best: C(317,315) = 50086                                                
+    best: C_duplicates(13,7) = 50388                                        
+
+    $ ./perm-comb-finder.py --minimum-r=6 --top=500
+    best: P(9,6) = 60480                                                    
+    best: P(9,9) = 362880                                                   
+    best: P_duplicates(7,6) = 117649.0                                      
+    best: C(317,315) = 50086                                                
+    best: C_duplicates(13,7) = 50388                                        
+
+Of these, C_duplicates(13,7) might be the most interesting, but technically
+C(317,315) is still the winner.
 
 Future Work
 -----------

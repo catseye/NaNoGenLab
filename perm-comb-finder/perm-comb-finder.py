@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from math import factorial, pow
+from optparse import OptionParser
 import sys
 
 
@@ -18,7 +19,10 @@ def P(n, r):
 
 # order matters. repetition allowed.
 def P_duplicates(n, r):
-    return pow(n, r)
+    try:
+        return pow(n, r)
+    except OverflowError:
+        return float('inf')  # everything in Python is Pythonic, esp. this
 
 
 # order doesn't matter. repetition not allowed.
@@ -32,6 +36,7 @@ def C_duplicates(n, r):
 
 
 TARGET = 50000
+MIN_R = 1
 
 def find(fun, top):
     best = 10000000000
@@ -40,7 +45,7 @@ def find(fun, top):
         if best == TARGET:
             print "BINGO!"
             break
-        for r in tqdm(xrange(1, n+1)):
+        for r in tqdm(xrange(MIN_R, n+1)):
             attempt = fun(n, r)
             if attempt >= TARGET and attempt < best:
                 best = attempt
@@ -52,19 +57,30 @@ def find(fun, top):
 
 
 def main(argv):
-    (best, n, r) = find(P, 300)
+    global MIN_R
+
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--minimum-r", default=1,
+                         help="lowest value of _r_ to consider")
+    optparser.add_option("--top", default=400,
+                         help="highest value of _n_ to consider")
+    (options, args) = optparser.parse_args(argv[1:])
+    MIN_R = int(options.minimum_r)
+    options.top = int(options.top)
+
+    (best, n, r) = find(P, options.top)
     print "best: P(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find(lambda n, r: P(n, n), 100)
+    (best, n, r) = find(lambda n, r: P(n, n), options.top)
     print "best: P(%s,%s) = %s" % (n, n, best)
 
-    (best, n, r) = find(P_duplicates, 100)
+    (best, n, r) = find(P_duplicates, options.top)
     print "best: P_duplicates(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find(C, 500)
+    (best, n, r) = find(C, options.top)
     print "best: C(%s,%s) = %s" % (n, r, best)
 
-    (best, n, r) = find(C_duplicates, 500)
+    (best, n, r) = find(C_duplicates, options.top)
     print "best: C_duplicates(%s,%s) = %s" % (n, r, best)
 
 
