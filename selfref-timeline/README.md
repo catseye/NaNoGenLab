@@ -17,8 +17,8 @@ Apparatus
 Method
 ------
 
-*   Generate a timeline, peppered with two kinds of events,
-    PREDICTION and MEMORY.
+*   Generate a timeline, peppered with three kinds of events,
+    SIGHTING, PREDICTION, and MEMORY.
 *   Tie each MEMORY to a previous event (if no previous event, delete this
     MEMORY event.)
 *   Tie each PREDICTION to a future event (if no future event, delete this
@@ -28,4 +28,12 @@ Method
 Observations
 ------------
 
-recursion depth exceeded.  back to the drawing board
+Still has significant bugs, but shows promise.
+
+> Alice turned to Bob and asked, "Bob, do you think we will ever remember that time when see a UFO ranting obnoxiously?"
+> 
+> Bob turned to Alice and said, "Alice, do you remember that one time when we wonder if we'd ever remember that time when see a UFO ranting obnoxiously?"
+> 
+> Alice turned to Bob and asked, "Bob, do you think we will ever see a UFO ranting obnoxiously?"
+> 
+> Alice and Bob saw a UFO ranting obnoxiously.
