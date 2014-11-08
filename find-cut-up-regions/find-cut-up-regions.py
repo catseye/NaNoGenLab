@@ -10,6 +10,8 @@ from PIL import Image
 
 def main(argv):
     optparser = OptionParser(__doc__)
+    optparser.add_option("--debug", action='store_true', default='False',
+                         help="output debuging info")
     (options, args) = optparser.parse_args(argv[1:])
 
     image = Image.open(args[0])
@@ -27,6 +29,7 @@ def main(argv):
  
     region = image.crop((margin_left, margin_top, margin_right, margin_bottom))
     image = region.copy()
+    contrast = image.copy()
 
     (width, height) = image.size
 
@@ -43,18 +46,23 @@ def main(argv):
         for x in xrange(0, width):
             pixel = image.getpixel((x, y))
             light = False
-            if pixel > 150:
+            if pixel > 175:  # 150 ?
                 light = True
             if light:
-                #image.putpixel((x, y), 255)
+                if options.debug:
+                    contrast.putpixel((x, y), 255)
                 light_pixels += 1
             else:
-                #image.putpixel((x, y), 0)
+                if options.debug:
+                    contrast.putpixel((x, y), 0)
                 pass
         if (light_pixels / (width * 1.0)) > 0.96:
             light_rows.append(y)
             #for x in xrange(0, width):
             #    image.putpixel((x, y), 128)
+
+    if options.debug:
+        contrast.save("contrast.png")        
 
     cuttable_ribbons = []  # list of (y, thickness) tuples
     thickness = None
@@ -81,7 +89,7 @@ def main(argv):
     ]
     # FIXME: we could / should retain the insufficiently-thick ones?
 
-    if False:
+    if options.debug:
         print cuttable_ribbons
         for ribbon in cuttable_ribbons:
             for y in xrange(ribbon[0], ribbon[0] + ribbon[1]):
@@ -107,7 +115,8 @@ def main(argv):
         print "writing %s to crop%s.png" % (crop_area, crop_num)
         region.save("crop%s.png" % crop_num)
 
-    #image.save("output.png")
+    if options.debug:
+        image.save("output.png")
 
 
 if __name__ == '__main__':
