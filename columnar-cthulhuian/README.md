@@ -1,15 +1,20 @@
 columnar-cthulhuian
 ===================
 
-Requirements
-------------
+Hypothesis
+----------
+
+Iä! Iä! The Old Ones hath awakened!
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   3 input texts (possibly from Project Gutenberg)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Input the three texts and clean them up a bit; in particular, remove
     all lines with less than 60 characters, and truncate them so they all
@@ -17,8 +22,8 @@ Basic Strategy
 *   On each line, in column _n_, output the character from the
     ((_n_ mod 3) + 1)th input text.
 
-Sample Output
--------------
+Observations
+------------
 
 The first 35 lines when running this on _Time and the Gods_, _Principles
 of Scientific Managment_, and _The Rivet in Grandfather's Neck_:
