@@ -8,12 +8,26 @@ import sys
 from PIL import Image
 
 
-def cutup(filename, options):
+def mkdir_p(path):
+    try:
+        os.mkdir(path)
+    except OSError:
+        pass
+
+
+# TODO: scale all source images to same size first
+
+
+def cutup(filename, options, subdir, rotation=None):
+    """Returns list of output filenames"""
     image = Image.open(filename)
-    print image
+    if rotation is not None:
+        image = image.rotate(rotation, expand=True)
+    print filename, image
     dirname = os.path.basename(filename) + '.dir'
 
-    os.mkdir(dirname)
+    mkdir_p(dirname)
+    mkdir_p(os.path.join(dirname, subdir))
 
     (width, height) = image.size
 
@@ -90,10 +104,12 @@ def cutup(filename, options):
 
     if options.debug:
         print cuttable_ribbons
+        print "marking up image and saving to cutlines.png"
         for ribbon in cuttable_ribbons:
             for y in xrange(ribbon[0], ribbon[0] + ribbon[1]):
                 for x in xrange(0, width):
                     image.putpixel((x, y), 0)
+        image.save(os.path.join(dirname, "cutlines.png"))
 
     # compute the crop-areas BETWEEN the cuttable ribbons
     crop_y = 0
@@ -109,13 +125,18 @@ def cutup(filename, options):
         (0, crop_y, width, height)
     )
 
+    output_filenames = []
     for (crop_num, crop_area) in enumerate(crop_areas):
         region = image.crop(crop_area)
-        print "writing %s to crop%s.png" % (crop_area, crop_num)
-        region.save(os.path.join(dirname, "crop%s.png" % crop_num))
+        if rotation is not None:
+            # rotate BACK
+            region = region.rotate(-1 * rotation, expand=True)
+        output_filename = os.path.join(dirname, subdir, "strip_%s.png" % crop_num)
+        print "writing %s to %s" % (crop_area, output_filename)
+        region.save(output_filename)
+        output_filenames.append(output_filename)
 
-    if options.debug:
-        image.save(os.path.join(dirname, "cutlines.png"))
+    return output_filenames
 
 
 def main(argv):
@@ -125,7 +146,9 @@ def main(argv):
     (options, args) = optparser.parse_args(argv[1:])
 
     for filename in args:
-        cutup(filename, options)
+        strip_filenames = cutup(filename, options, 'strips')
+        for strip_filename in strip_filenames:
+            chunk_filenames = cutup(strip_filename, options, 'chunks', rotation=90)
 
 
 if __name__ == '__main__':
