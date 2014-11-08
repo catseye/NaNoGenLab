@@ -62,7 +62,7 @@ def render_toplevel(event):
             '%s smiled.  "Of course I do, %s."' % (
                 a, b, b,
                 render(event.target_event, starting_at, mentioned, tense='past'),
-                a, b
+                b, a
             )
         )
     elif isinstance(event, Sighting):

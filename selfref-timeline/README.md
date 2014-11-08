@@ -32,14 +32,14 @@ I think it works quite well.  Here is the output of `./selfref-timeline.py 10`:
 
 > Alice and Bob saw a ghost looking pensive.
 > 
-> Then one day, Alice turned to Bob and said, "Bob, do you remember that one time when we saw a ghost looking pensive?"  Alice smiled.  "Of course I do, Bob."
+> Then one day, Alice turned to Bob and said, "Bob, do you remember that one time when we saw a ghost looking pensive?"  Bob smiled.  "Of course I do, Alice."
 > 
-> Then one day, Bob turned to Alice and said, "Alice, do you remember that one time when we remembered that time when we saw a ghost looking pensive?"  Bob smiled.  "Of course I do, Alice."
+> Then one day, Bob turned to Alice and said, "Alice, do you remember that one time when we remembered that time when we saw a ghost looking pensive?"  Alice smiled.  "Of course I do, Bob."
 > 
 > Then one day, Bob turned to Alice and asked, "Alice, do you think that one day we will wonder if we'd ever remember that time when we remembered that time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  "I don't know, Bob," said Alice.
 > 
 > Then one day, Bob turned to Alice and asked, "Alice, do you think that one day we will remember that time when we remembered that time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  "I don't know, Bob," said Alice.
 > 
-> Then one day, Bob turned to Alice and said, "Alice, do you remember that one time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  Bob smiled.  "Of course I do, Alice."
+> Then one day, Bob turned to Alice and said, "Alice, do you remember that one time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  Alice smiled.  "Of course I do, Bob."
 > 
-> Then one day, Alice turned to Bob and said, "Bob, do you remember that one time when we remembered that time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  Alice smiled.  "Of course I do, Bob."
+> Then one day, Alice turned to Bob and said, "Bob, do you remember that one time when we remembered that time when we remembered that time when we remembered that time when we saw a ghost looking pensive?"  Bob smiled.  "Of course I do, Alice."
