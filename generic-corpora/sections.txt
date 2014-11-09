@@ -4,12 +4,12 @@ foreword
 preamble
 prelude
 volume
-part
 book
+part
 chapter
 section
 interlude
-article
+episode
 scene
 act
 verse

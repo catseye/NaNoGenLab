@@ -2,6 +2,7 @@
 
 from itertools import combinations
 import sys
+import re
 
 
 try:
@@ -24,16 +25,38 @@ except ImportError:
 # 23005 / 1330.0 = 17.296992481203006
 
 
+def clean(w):
+    return re.match(r"^.*?([_a-zA-Z0-9\']+).*?$", w).group(1)
+
+
+def proc_paragraphs(ps):
+    acc = ', '.join(ps)
+    acc = acc.capitalize()
+    while acc[-1] in (('.', ',', ' ', '?', '!')):
+        acc = acc[:-1]
+    # keep proper nouns proper -- it's only proper
+    for proper in ('multivac', 'messerschmitts', 'wellington', 'soho',
+                   'ozymandias', "i'll", "crimea", 'thinkpad'):
+        acc = acc.replace(proper, proper.capitalize())
+    if acc.startswith('_'):
+        acc = '_' + acc[1:].capitalize()
+    return acc
+
+
 def main(argv):
     # 1. LOAD
     part1 = []
     with open(argv[1], 'r') as f:
         for line in f:
-            part1.append(line.strip().upper())
+            part1.append(line.strip().capitalize())
     assert len(part1) == 21
 
-    part2 = ['word%s' % (x+1) for x in xrange(0, 215)]
-    assert len(part2) == 215
+    part2 = []
+    with open(argv[2], 'r') as f:
+        for line in f:
+            part2.extend([clean(w) for w in line.strip().split()])
+
+    assert len(part2) == 215, len(part2)
 
     # 2. MUNGE
     headings = []
@@ -42,27 +65,33 @@ def main(argv):
 
     paragraphs = []
     for c in combinations(part2, 2):
-        paragraphs.append(' '.join(c).capitalize())
+        paragraphs.append(' '.join(c))
 
     # 3. GO
+    c = 0
     while headings and paragraphs:
         h = headings.pop(0)
         sys.stdout.write(h + '\n')
         sys.stdout.write(('-' * len(h)) + '\n\n')
         
-        for n in xrange(0, 17):
+        d = 17
+        if c % 4 == 0:
+            d = 18
+        ps = []
+        for n in xrange(0, d):
             if not paragraphs:
                 continue
-            p = paragraphs.pop(0)
-            sys.stdout.write(p + '.  ')
-        sys.stdout.write('\n\n')
+            ps.append(paragraphs.pop(0))
+        sys.stdout.write(proc_paragraphs(ps) + '.\n\n')
+
+        c += 1
 
     assert not headings
-    
+
+    ps = []    
     while paragraphs:
-        p = paragraphs.pop(0)
-        sys.stdout.write(p + '.  ')
-    sys.stdout.write('\n\n')
+        ps.append(paragraphs.pop(0))
+    sys.stdout.write(proc_paragraphs(ps) + '.\n\n')
 
 
 if __name__ == '__main__':
