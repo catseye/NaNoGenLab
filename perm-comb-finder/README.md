@@ -1,6 +1,8 @@
 perm-comb-finder
 ================
 
+_Note: despite appearances, this experiment has nothing to do with haircare._
+
 Hypothesis
 ----------
 
@@ -14,7 +16,7 @@ This should exclude trivial solutions like P(50000, 1).  And, assuming this
 novel will be in "sentences" of _r_ words, what results do we get if we
 insist on a high _r_?
 
-OK so my actualy hypothesis is that I can get a computer to brute-force its
+OK so my actual hypothesis is that I can get a computer to brute-force its
 way through these numbers so I don't have to do anything hard like write
 proofs.
 
@@ -41,12 +43,12 @@ or anything like that.
 
 ### P (permutations without repetitions) ###
 
-When looking at _n_s up to 300, the best it found was P(225, 2) = 50400.
+When looking at _n_'s up to 300, the best it found was P(225, 2) = 50400.
 This was still the reigning champion for _n_'s up to 1000.
 
 Note also that the square root of 50,000 is approximately 223.60679774997897,
 so (noting that 225 - 2 = 223) I think P(225, 2) is probably the best we can do
-(short of P(50000, 1) which is I arbitrarily deem too trivial to consider.)
+(short of P(50000, 1) which I arbitrarily deem too trivial to consider.)
 
 There is probably a proof one could write for this fact, but I'm happy to not
 do that right now.
@@ -205,4 +207,6 @@ Still pretty ick.  Memoize and search for addition-pairs, please?
     3990: [('r*C', 21, 3), ('r*C', 21, 19), ('r*C_duplicates', 19, 3)]
     46010: [('r*C', 215, 214)]
 
-Sigh.  It will have to do.
+Sigh.  It will have to do.  Acquiring 21 and 215 sets of unique words
+respectively, and using _r_ = 2 instead of _r_ = 214, the result is
+[3×C(21,3)+2×C(215,2)=50000: The Novel](https://gist.github.com/cpressey/d100d3519083638d45c3).
