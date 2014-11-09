@@ -27,3 +27,4 @@ Method
 Observations
 ------------
 
+So far, so good.

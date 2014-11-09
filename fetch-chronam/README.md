@@ -1,6 +1,20 @@
 fetch-chronam
 =============
 
+_This is not an experiment.  It is a piece of lab equipment._
+
+Abstract
+--------
+
+This tool provides a command-line front-end for
+
+*   searching the chroniclingameria API for a keyword
+*   downloading _n_ scanned images from the search results
+*   converting them from JPEG-2000 to PNG format
+
+This code was originally in [naive-cut-up](../naive-cut-up/), from whence it
+was extracted.
+
 Requirements
 ------------
 
@@ -8,17 +22,6 @@ Requirements
 *   [requests](http://docs.python-requests.org/)
 *   [chroniclingamerica.py](https://github.com/hugovk/chroniclingamerica.py)
 *   ImageMagick
-
-Basic Strategy
---------------
-
-*   Just provide a command-line front-end for
-    *   searching the chroniclingameria API for a keyword
-    *   downloading _n_ scanned images from the search results
-    *   converting them from JPEG-2000 to PNG format
-
-This code was originally in [naive-cut-up](../naive-cut-up/), from whence it
-was extracted.
 
 Usage
 -----

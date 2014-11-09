@@ -14,6 +14,8 @@ Apparatus
 *   Python 2.7.6 (probably works with older versions too)
 *   [requests](http://docs.python-requests.org/)
 *   [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
+*   [Pillow](http://python-pillow.github.io/) (it might work with PIL too)
+*   ImageMagick
 *   some kind of input text (uses lorem ipsum for now)
 
 Method
@@ -23,7 +25,9 @@ Method
     such as `PD_Gutenberg` or `PD-Art_(PD-Japan)`, and write that list of
     URLs to an index file.
 *   Select _n_ images randomly from that index and download them.
-*   (TODO) Inject those images as illustrations in a given text.
+*   Convert them to PNGs and resize any that are wider than 400 pixels
+    downward
+*   Inject those images as illustrations in a given text.
 
 Observations
 ------------
@@ -46,11 +50,14 @@ good idea to double-check.
     [...]
     $ ristretto art/
 
+This is all pretty crazy and a piece of lab equipment should really be broken
+off of it.
+
 TODO
 ----
 
 Add a flag that looks for the "guaranteed public domain" text on the media
 page and only downloads if it finds it.
 
-Resize illustrations used in HTML (more research into using paper sizes
-in HTML might be necessary)
+Research paper size specification/usage in CSS3/HTML.  Ideally we'd like to
+be able to specify image sizes in inches assuming a printed page, or smth.

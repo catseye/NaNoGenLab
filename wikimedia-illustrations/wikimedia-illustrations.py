@@ -6,6 +6,8 @@ import re
 
 from bs4 import BeautifulSoup
 import requests
+import PIL
+from PIL import Image
 
 
 LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -45,6 +47,34 @@ def get_image_from_page(url, local_filename):
 
     comply_with_terms_of_use()
     return True
+
+
+def convert_image(filename, max_width=400):
+    new_filename = os.path.join(
+        os.path.dirname(filename), "_converted_" + os.path.basename(filename) + ".png"
+    )
+    if os.path.exists(new_filename):
+        print "already converted"
+        return new_filename
+    print 'convert {0} {1}'.format(filename, new_filename)
+    exit_code = os.system("convert {0} {1}".format(filename, new_filename))
+    if exit_code != 0:
+        print "ERROR converting image!"
+        return False
+
+    image = Image.open(new_filename)
+    print image
+    width = image.size[0]
+    height = image.size[1]
+    if width > max_width:
+        scale = max_width / float(width)
+        new_width = int(width * scale)
+        new_height = int(height * scale)
+        print "resizing to %s x %s" % (new_width, new_height)
+        image = image.resize((new_width, new_height), resample=PIL.Image.ANTIALIAS)
+        image.save(new_filename)
+
+    return new_filename
 
 
 def load_index(filename):
@@ -139,6 +169,7 @@ def main(argv):
     <title>Lorum Ipsem Shkoo</title>
     <style>
 hr { page-break-before: always; }
+.c { width: 100%; text-align: center; }
     </style>
   <body>
    $
@@ -148,14 +179,22 @@ hr { page-break-before: always; }
         body = ''
         for x in xrange(0, count):
             filename = get_random_image(index, dest_dir)
+            filename = convert_image(filename)
+
             if x != 0:
                 body += '<hr>'
 
             paras = ['<p>' + LOREM_IPSUM + '</p>'] * 4
-            paras.append('<img src="%s">' % filename)
+            align = random.choice(('left', 'right', 'centre'))
+            if align == 'left':
+                paras.append('<img style="float: left" src="%s">' % filename)
+            elif align == 'right':
+                paras.append('<img style="float: right" src="%s">' % filename)
+            elif align == 'centre':
+                paras.append('<div class="c"><img src="%s"></div>' % filename)
             random.shuffle(paras)
             body += ''.join(paras)
-        
+
         template = template.replace('$', body)
         with open('tmp.html', 'w') as f:
             f.write(template)
