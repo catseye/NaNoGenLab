@@ -1,24 +1,32 @@
 wikimedia-illustrations
 =======================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that if we download some random public-domain images from
+Wikimedia Commons and inject them randomly into a text, it'll make just
+about any text look more interesting.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   [requests](http://docs.python-requests.org/)
 *   [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
+*   some kind of input text (uses lorem ipsum for now)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Get URLs for all images from all pages of a Wikimedia Commons category,
-    such as "PD_Gutenberg" or "PD-Art_(PD-Japan)", and write that list of
+    such as `PD_Gutenberg` or `PD-Art_(PD-Japan)`, and write that list of
     URLs to an index file.
 *   Select _n_ images randomly from that index and download them.
 *   (TODO) Inject those images as illustrations in a given text.
 
-Usage
------
+Observations
+------------
 
 NOTE 1: to stay (IMO) well within Wikimedia's [Terms of use](http://meta.wikimedia.org/wiki/Terms_of_use),
 this script sleeps for 8 seconds after making any major HTTP request.
@@ -44,4 +52,5 @@ TODO
 Add a flag that looks for the "guaranteed public domain" text on the media
 page and only downloads if it finds it.
 
-Create a Markdown or HTML file with boilerplate text and embedded illustrations.
+Resize illustrations used in HTML (more research into using paper sizes
+in HTML might be necessary)

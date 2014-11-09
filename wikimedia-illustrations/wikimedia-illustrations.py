@@ -8,6 +8,9 @@ from bs4 import BeautifulSoup
 import requests
 
 
+LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+
 def comply_with_terms_of_use():
     # http://meta.wikimedia.org/wiki/Terms_of_use
     # says some things about not engaging in automated usage of the site
@@ -40,7 +43,24 @@ def get_image_from_page(url, local_filename):
             for block in response.iter_content(1024):
                 f.write(block)
 
+    comply_with_terms_of_use()
     return True
+
+
+def load_index(filename):
+    index = []
+    with open(filename) as f:
+        for line in f:
+            index.append(line.strip())
+    return index
+
+
+def get_random_image(index, dest_dir):
+    media_url = random.choice(index)
+    print media_url
+    local_filename = os.path.join(dest_dir, media_url.split(':')[-1])
+    get_image_from_page(media_url, local_filename)
+    return local_filename
 
 
 def main(argv):
@@ -85,7 +105,6 @@ def main(argv):
                 media_url = line.strip()
                 local_filename = media_url.split(':')[-1]
                 get_image_from_page(media_url, local_filename)
-                comply_with_terms_of_use()
 
     elif argv[1] == 'convertmany':
         dest_dir = argv[2]
@@ -104,17 +123,44 @@ def main(argv):
     elif argv[1] == 'random':
         count = int(argv[2])
         dest_dir = argv[3]
-        index_filename = argv[4]
-        index = []
-        with open(index_filename) as f:
-            for line in f:
-                index.append(line.strip())
+        index = load_index(argv[4])
         for n in xrange(0, count):
-            media_url = random.choice(index)
-            print media_url
-            local_filename = os.path.join(dest_dir, media_url.split(':')[-1])
-            get_image_from_page(media_url, local_filename)
-            comply_with_terms_of_use()
+            get_random_image(index, dest_dir)
+
+    elif argv[1] == 'render':
+        count = int(argv[2])
+        dest_dir = argv[3]
+        index = load_index(argv[4])
+        template = """\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Lorum Ipsem Shkoo</title>
+    <style>
+hr { page-break-before: always; }
+    </style>
+  <body>
+   $
+  </body>
+</html>"""
+
+        body = ''
+        for x in xrange(0, count):
+            filename = get_random_image(index, dest_dir)
+            if x != 0:
+                body += '<hr>'
+
+            paras = ['<p>' + LOREM_IPSUM + '</p>'] * 4
+            paras.append('<img src="%s">' % filename)
+            random.shuffle(paras)
+            body += ''.join(paras)
+        
+        template = template.replace('$', body)
+        with open('tmp.html', 'w') as f:
+            f.write(template)
+        import webbrowser
+        webbrowser.open('tmp.html')
 
     else:
         raise KeyError('please read the source code')
