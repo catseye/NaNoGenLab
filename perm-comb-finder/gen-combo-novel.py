@@ -24,44 +24,45 @@ except ImportError:
 # 23005 / 1330.0 = 17.296992481203006
 
 
-PART1 = ['word%s' % (x+1) for x in xrange(0, 21)]
-PART2 = ['word%s' % (x+1) for x in xrange(0, 215)]
-
-PART1 = [
-    'pascal',
-    'python',
-    'pool',
-    'purloin',
-    'puppy',
-    'pathos',
-    'pumpkin',
-
-    'seven',
-    'serious',
-    'sideline',
-    'scurry',
-    'scrum',
-    'solace',
-    'semester',
-    
-    'rhinocerous',
-    'rapacious',
-    'ridiculous',
-    'reset',
-    'riddle',
-    'ramble',
-    'rarity',
-]
-
-
 def main(argv):
-    assert len(PART1) == 21
-    assert len(PART2) == 215
-    with open(argv[1], 'w') as f:
-        for (part, r) in ((PART1, 19), (PART2, 214)):
-            print len(list(combinations(part, r)))
-            for c in tqdm(combinations(part, r)):
-                f.write(' '.join(c).capitalize() + '.\n\n')
+    # 1. LOAD
+    part1 = []
+    with open(argv[1], 'r') as f:
+        for line in f:
+            part1.append(line.strip().upper())
+    assert len(part1) == 21
+
+    part2 = ['word%s' % (x+1) for x in xrange(0, 215)]
+    assert len(part2) == 215
+
+    # 2. MUNGE
+    headings = []
+    for c in combinations(part1, 3):
+        headings.append(' '.join(c))
+
+    paragraphs = []
+    for c in combinations(part2, 2):
+        paragraphs.append(' '.join(c).capitalize())
+
+    # 3. GO
+    while headings and paragraphs:
+        h = headings.pop(0)
+        sys.stdout.write(h + '\n')
+        sys.stdout.write(('-' * len(h)) + '\n\n')
+        
+        for n in xrange(0, 17):
+            if not paragraphs:
+                continue
+            p = paragraphs.pop(0)
+            sys.stdout.write(p + '.  ')
+        sys.stdout.write('\n\n')
+
+    assert not headings
+    
+    while paragraphs:
+        p = paragraphs.pop(0)
+        sys.stdout.write(p + '.  ')
+    sys.stdout.write('\n\n')
 
 
 if __name__ == '__main__':
