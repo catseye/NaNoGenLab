@@ -1,15 +1,21 @@
 join-at-pivot
 =============
 
-Requirements
-------------
+Hypothesis
+----------
+
+Maybe if we join sentences from texts at their middle words, we will get
+new sentences.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   A bunch of Project Gutenberg texts in plain text format
 
-Basic Strategy
---------------
+Method
+------
 
 *   Find the middle word ("pivot") of each sentence and split the sentence
     into a "beginner" which ends with the pivot and an "ender" which begins
@@ -19,8 +25,8 @@ Basic Strategy
 *   To make a sentence, pick a random pivot, and random beginner for that
     pivot, and a random ender for that pivot.
 
-Sample Output
--------------
+Observations
+------------
 
 > A factory usually does not have more enterprising than the rest, had set
 > off upon an expedition. With intent, I have rushed you from the chambers
