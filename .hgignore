@@ -5,3 +5,4 @@ syntax: glob
 *.jp2
 *.png
 *.pyc
+tmp.html
