@@ -5,7 +5,14 @@ import os
 import random
 import sys
 
+import PIL
 from PIL import Image
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(x):
+        return x
 
 
 def mkdir_p(path):
@@ -15,15 +22,11 @@ def mkdir_p(path):
         pass
 
 
-# TODO: scale all source images to same size first
-
-
-def cutup(options, filename, dirname, prefix='', rotation=None):
+def cutup(options, image, dirname, prefix='', rotation=None):
     """Returns list of output filenames"""
-    image = Image.open(filename)
+
     if rotation is not None:
         image = image.rotate(rotation, expand=True)
-    print filename, image
 
     mkdir_p(dirname)
 
@@ -49,9 +52,7 @@ def cutup(options, filename, dirname, prefix='', rotation=None):
     # that should make it easier to work on a wide range of images of varying
     # contrast levels
 
-    for y in xrange(0, height):
-        if y % 100 == 0:
-            print "row %s/%s" % (y, height)
+    for y in tqdm(xrange(0, height)):
         light_pixels = 0
         for x in xrange(0, width):
             pixel = image.getpixel((x, y))
@@ -93,6 +94,8 @@ def cutup(options, filename, dirname, prefix='', rotation=None):
 
     # reduce ribbon thicknesses
     margin = 4  # how much whitespace you want around darkpixelness?
+                # note that if you change the scale (dimensions), ...
+                # so this could be an option, maybe?
     cuttable_ribbons = [
         (start_y + margin, thickness - margin * 2)
         for (start_y, thickness) in cuttable_ribbons
@@ -144,6 +147,9 @@ def cutup(options, filename, dirname, prefix='', rotation=None):
 
 def main(argv):
     optparser = OptionParser(__doc__)
+    optparser.add_option("--dimensions", default=None,
+                         help="scale all input pages to these dimensions")
+    # note: cutup margins are dependent on page scale.
     optparser.add_option("--debug", action='store_true', default=False,
                          help="output debuging info")
     (options, args) = optparser.parse_args(argv[1:])
@@ -153,12 +159,23 @@ def main(argv):
         mkdir_p(dirname)
         strips_dirname = os.path.join(dirname, 'strips')
         mkdir_p(strips_dirname)
-        strip_filenames = cutup(options, filename, strips_dirname)
+        image = Image.open(filename)
+        print filename, image
+
+        if options.dimensions is not None:
+            (width, height) = map(int, options.dimensions.split('x'))
+            image = image.resize((width, height),
+                                 resample=PIL.Image.ANTIALIAS) # might be useless
+            print "scaled:", image
+
+        strip_filenames = cutup(options, image, strips_dirname)
         chunks_dirname = os.path.join(dirname, 'chunks')
         mkdir_p(chunks_dirname)
         for strip_filename in strip_filenames:
+            strip_image = Image.open(strip_filename)
+            print strip_filename, strip_image
             chunk_filenames = cutup(
-                options, strip_filename, chunks_dirname,
+                options, strip_image, chunks_dirname,
                 prefix=os.path.basename(strip_filename), rotation=90
             )
 

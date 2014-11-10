@@ -23,6 +23,9 @@ Method
     (say 90%) of the pixels are "light", record this line.
 *   Amalgamate adjacent recorded lines and possibly reduce their thickness.
 *   Strips to cut will be those between the lines.
+*   Then, for each strip, rotate it 90 degrees and run in through the
+    above process (as if it were an entire input image), rotating the
+    generated "strips" from that back -90 degrees.
 
 Observations
 ------------
