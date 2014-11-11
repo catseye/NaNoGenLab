@@ -47,3 +47,5 @@ takeThing n Rabbit = ["a", "rabbit"]
 
 
 lots1 = Single lots1' where lots1' = Box lots1
+
+flatten = foldl (\x a -> x ++ " " ++ a) ""

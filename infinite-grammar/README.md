@@ -61,8 +61,11 @@ as a warmup
 Then I defined a simple grammar of boxes and rabbit and a simple infinite
 structure of boxes (but no rabbits):
 
-    Main> takeContents 5 lots1 ++ ["something"]
-    ["a","box","containing","a","box","containing","something"]
+    Main> flatten $ takeContents 5 lots1 ++ ["something"]
+    " a box containing a box containing something"
 
 Next step will be for there to be "occasionally" (i.e. in each 2nd level)
 a rabbit.
+
+Really, `takeContents` should add `something` or whatever itself
+when _n_ reaches 0, too.
