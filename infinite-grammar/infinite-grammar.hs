@@ -12,6 +12,10 @@ takeTree 0 (Branch x _ _) = [x]
 takeTree _ Leaf = []
 takeTree n (Branch x lhs rhs) = [x] ++ (takeTree (n-1) lhs) ++ (takeTree (n-1) rhs)
 
+-- utility function
+
+flatten = foldl (\x a -> x ++ " " ++ a) ""
+
 --
 -- ================================================================
 --
@@ -45,7 +49,10 @@ takeThing 0 _ = []
 takeThing n (Box c) = ["a", "box", "containing"] ++ takeContents (n-1) c
 takeThing n Rabbit = ["a", "rabbit"]
 
+-- an infinite nest of boxes.
 
 lots1 = Single lots1' where lots1' = Box lots1
 
-flatten = foldl (\x a -> x ++ " " ++ a) ""
+-- a box containing an infinite number of rabbits
+
+lots2 = Single (Box lots2') where lots2' = Both Rabbit lots2'

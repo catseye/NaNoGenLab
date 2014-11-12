@@ -64,6 +64,11 @@ structure of boxes (but no rabbits):
     Main> flatten $ takeContents 5 lots1 ++ ["something"]
     " a box containing a box containing something"
 
+And then a single box containing an unending series of rabbits:
+
+    Main> flatten $ takeContents 13 lots2
+    " a box containing a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and and"
+
 Next step will be for there to be "occasionally" (i.e. in each 2nd level)
 a rabbit.
 
