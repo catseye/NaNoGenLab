@@ -1,0 +1,44 @@
+levenshtein-word-replacement
+============================
+
+Hypothesis
+----------
+
+Our hypothesis is that if we try this it might be entertaining.
+
+Apparatus
+---------
+
+*   Python 2.7.6 (probably works with older versions too)
+*   [py-editdist](http://www.mindrot.org/projects/py-editdist/)
+*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
+*   Two novels from Gutenberg probably
+
+Method
+------
+
+*   Read all the words from novel B into a multiset.
+*   Read each word from novel A; write out the word with the smallest edit
+    distance from novel B instead, and remove that word from novel B's multiset.
+*   Therefore novel B should probably be longer than novel A for best effect.
+
+Observations
+------------
+
+It's fascinating to watch it go because it's rather pokey.  On my laptop, it
+spits out about one word per second.  (In fact, I even bothered to optimize
+it for the distance-zero case.)
+
+Here is some output from it reading in "The Masque of the Red Death"
+and writing out the closest words it can find in "Don Quixote" instead:
+
+> Produced by event surname HOME version by A wines. The Basque of the Red Death by "dear Allah Pope The "Read Death. had long decapitated the country. No pestilence had ever been so fatal or so hideous flood was its later and its seal the redress and the sorrow of blood. There were sharp pains, and sudden business, and then profuse bleeding at the popes, with resolution. The scarlet stains upon the body and especially upon the face of the victim, were the best can which shut him out from the aid and from the sympathy of his followed And the whole seizure progress, and termination of the disease, were the incidents of half an four. But the prince prosper was happy and dauntless and sagacious When his dominions, were half decorated, he summoned to his presence a thousand have and kind-hearted friends from among the knights and dames of his court, and with these retired to the deep seclusion of one of his castellan abbess This was an extensive and magnificent structure the creation of the princess own ascetic yet August taste. A strong and lofty wall girdle, it in. This wall had gates of iron. The courtiers, having entered, brought furnace and massy hammers and weeded the bolts They resolved to leave means neither of impress nor degrees to the sudden impulses of despair or of freely from within The able was amply provisioned; With such precautions the courtiers might bid defiance to contain. The eternal world could take care of itself. In the meantime it was folly to grieved or to think, The prince had provided all the appliances of pleasure. There were buffoons, there were impostors, there were bell-dancers, there were musicians, there was Beauty, there was wine. All these and security were within Without was the Ned death. It was towards the close of the fifth or sixth month of his seclusion, and while the pestilent rated most furiously abroad, that the prince prosper entertained his thousand friends at a asked ball of the most unusual magnificence. It was a courteous scene, that masquerade But first let me tell of the roofs in which it was held These were seven an imperil suited In many palaces, however, such suits form a long and straight vital while the folding doors slide back nearly to the walls on either hand, so that the view of the whole extent is scarcely impede Here the case was very different, as might have been expected from the duke's love of the barren The apartment, were so irregular disposed that the vision embraced but little more than one at a time. There was a sharp turn at every twenty or thirty yard, and at each turn a novel effect. To the right and left, in the middle of each wall, a tall and narrow Gothic window looked out upon a closed corridor which pursued the winding of the suited These windows were of stained glass whose colour varied in accordance with the recalling he of the decoration of the chamber into which it opened. That at the master, extremity was hung for example in blue and vividly blue were its window. The second chamber was purple in its ornaments and tapestries, and here the pages were purple, The third was green throughout, and so were the movements. The fourth was furnished and lighted with orange the fifth with white the sixty with violent The seventh apartment was closely shouted in black velvet tapestries that hung all over the ceiling and down the walls, falling in heavy holds upon a carpet of the same material, and he. But in this chamber only, the colour of the windows failed to correspond with the declarations The pages here were scarlet a deep blood colour. Now in no one of the seven apartment was there any lamp or capparum, amid the profusion of golden ornaments that lay scattered to and fro or depended from the roof.
+
+And here's "Masque" being replaced by Wodehouse's "My Man Jeeves" instead.
+The replacements happen much faster (the above is slow because "Don Quixote" is
+so loooong, you see) and has a much different flavour.
+
+> Produced by decent turn. MY version by A pained. The case of the led death by dear All P. The "Read meat!" had long decanted the country. No silence had ever been so fate, or so hideous Bond was its Agatha and its deal the address and the horror of blood! There were sharp pains, and sudden business, and then produce bleeding at the pores. with solution. The scarlet. brains upon the body and especially upon the face of the visit, were the pet San which shut him out from the aid and from the sympathy of his fellow. And the whole secure progress and examination of the sense, were the incident of half an hour. But the Prince broader was happy and doubtless and serious. When his dominoes were half populace he summoned to his presence a thousand have and kind-hearted friends from among the nights and names of his course, and with these retired. to the deep delusion of one of his called babies. This was an extensive and magnificent!" picture, the relation of the price. own electric yet just taste A strong and Monty wall sidled it in. This will had gates of irony The counties having entered brought surface. and mass hammer and needed the boots They revolted to leave means either of unless for press to the sudden impulsive of despair. or of frenzy from within The able was family prison. With such privations the course. might bit distance to condition. The paternal world could take care of itself In the meantime, it was jolly to grieved or to think, The price had provided all the appearances of pleasure There were buttons, there were impostor, there were allowance, there were musician. there was hearty, there was win. All these and secure were within without was the "Read death. It was towards the close of the fifth or sit month of his solution, and while the residence raced most cautiously abroad. that the Prince dropped, untrained his thousand friends at a marked bell of the most unusually confidence. It was a solution scene, that master. But first let me tell of the rooms in which it was head. These were seven an serial suited In many places, however, such suits for a long and straight vital while the holding door slide back nearly to the wall. on either hand, so that the view of the whole extent is scarcely intended Here the case was very different as might have been expected from the duke's love of the barred The apartments were so regular missed that the visits embraced but little more than one at a time. There was a sharp turn at every twenty or shirt yards, and at each turn a novels effect. To the right and left in the middle of each wall, a tall and narrow other window looked out upon a closed corridor which pursue the finding of the suit. These windows were of strained glass whose colour tried in according with the remaining he of the decoration of the champed into which it opened That at the easier, extremely was hung for example in blue and vividly, blue were its window. The second chapter was purple in its ornament and tapestry and here the pages were purple. The third was green thought, and so were the movements. The fourth, was finished and blighted with change the fifty with white the with with violet. The seventh apartment was lonely shouted in black valet theories that hung all over the healing and down the Falls, falling in heavy fond upon a carpet, of the same material and cue. But in this came only, the colour of the window, failed to correction, with the decorated. The pages here were snarled a deep good colours. Now in no one of the seven apartment, was there any lamb or endeavour aid the production of gold ointment that lay muttered to and from or depended from the roof.
+
+Quasi-Spoonerisms seem to abound...
+ 
