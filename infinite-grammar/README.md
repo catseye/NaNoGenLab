@@ -13,7 +13,7 @@ is a _schema_ for trees (sentences.)  So what do we even mean?
 Well, we could make an infinite schema, but that's kind of like an infinite
 program.  There's no real advantage for a program to be infinite (barring
 having some rather esoteric mathematical properties that we won't consider
-here) because it can just loop or recurse; it's _expression_ can be
+here) because it can just loop or recurse anyway; it's _expression_ can be
 infinite, easily, even if it's finite.
 
 Well, or we could have an infinite list of all possible sentences generated
@@ -52,25 +52,46 @@ Method
 Observations
 ------------
 
+The source file can be loaded into Hugs like so, and then interactively
+played with.
+
+    $ hugs infinite-grammar.hs
+
 Well, first I did this with trees that didn't resemble a grammar much
-as a warmup
+as a warmup.  I don't know why I called the infinite-tree-generating
+function `traps`, but I did.
 
     Main> takeTree 3 (traps "hi")
     ["hi","hia","hiaa","hiaaa","bhiaa","bhia","bhiaa","bbhia","bhi","bhia","bhiaa","bbhia","bbhi","bbhia","bbbhi"]
 
 Then I defined a simple grammar of boxes and rabbit and a simple infinite
-structure of boxes (but no rabbits):
+structure of boxes (but no rabbits) called `lots1`.  The `takeContents`
+function gets a finite part of it, and `sentencify` turns the list of words
+into a single string which is a sensible sentence:
 
-    Main> flatten $ takeContents 5 lots1 ++ ["something"]
-    " a box containing a box containing something"
+    Main> sentencify $ takeContents 5 lots1
+    "There was a box containing a box containing something."
 
-And then a single box containing an unending series of rabbits:
+And then a single box containing an unending series of rabbits, `lots2`.
 
-    Main> flatten $ takeContents 13 lots2
-    " a box containing a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and and"
+    Main> sentencify $ takeContents 13 lots2
+    "There was a box containing a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and a rabbit and something and some stuff."
 
-Next step will be for there to be "occasionally" (i.e. in each 2nd level)
-a rabbit.
+Now how about a box containing both rabbits _and_ boxes?  Why not?
 
-Really, `takeContents` should add `something` or whatever itself
-when _n_ reaches 0, too.
+    Main> sentencify $ takeContents 13 lots3
+    "There was a box containing a rabbit and a box containing a rabbit and a box containing a rabbit and a box containing a rabbit and something."
+
+You can't really tell they're nested, but that's English for you.  What if we
+define the contents of the box in the other order?  Will we ever see the
+rabbits, or will we recurse infinitely down the boxes on the left-hand side?
+Well,
+
+    Main> sentencify $ takeContents 7 lots4
+    "There was a box containing a box containing a box containing something and some stuff and a rabbit and a rabbit."
+
+OK, last example: mutual recursion.  Boxes 'A' contain a rabbit and a box 'B',
+and boxes 'B' contain just a box 'A'.
+
+    Main> sentencify $ takeContents 12 lots5
+    "There was a box containing a rabbit and a box containing a box containing a rabbit and a box containing a box containing some stuff."

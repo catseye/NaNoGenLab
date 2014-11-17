@@ -41,9 +41,9 @@ they were finished), the experiments have been:
 7. eliza-vs-eliza
 8. naive-cut-up
 9. poetic-inventory
-10. wikimedia-illustrations
+10. wikimedia-illustrations*
 11. evaporating-text
-12. shanty-generator
+12. shanty-generator*
 13. reluctance-generator
 14. columnar-cthulhuian
 15. ending-concordance
@@ -54,7 +54,7 @@ they were finished), the experiments have been:
 20. uniquified-novel
 21. binary-phone-words
 22. recursive-template
-23. infinite-grammar*
+23. infinite-grammar
 24. quick-and-dirty-markov
 25. wordplay-finder
 26. levenshtein-word-replacement
