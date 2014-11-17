@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from optparse import OptionParser
 import random
 import string
 
@@ -29,7 +30,12 @@ ASCII_LETTERS = set(string.uppercase)
 
 
 def main(argv):
-    filenames = argv[1:]
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--debug", default=False, action='store_true',
+                         help="show me the SpoonerScores<tm>")
+    (options, args) = optparser.parse_args(argv[1:])
+
+    filenames = args
 
     with open('/usr/share/dict/words', 'r') as f:
         for line in f:
@@ -56,7 +62,7 @@ def main(argv):
 
     words = []
 
-    for filename in tqdm(filenames):
+    for filename in filenames:
         with open(filename, 'r') as f:
             c = GutenbergCleaner(f)
             lines = c.extract_text().split('\n')
@@ -67,7 +73,7 @@ def main(argv):
 
     sentences = []
     sentence = []
-    for word in tqdm(words):
+    for word in words:
         if word.startswith(('"', "'")):
             word = word[1:]
         if word.endswith(('"', "'")):
@@ -89,6 +95,11 @@ def main(argv):
 
                 (cons1, base1) = strip_initial_consonants(word1)
                 (cons2, base2) = strip_initial_consonants(word2)
+                if len(cons1) == 0 and len(cons2) == 0:
+                    continue
+                if cons1.upper() == cons2.upper():
+                    continue
+
                 new1 = cons2 + base1
                 new2 = cons1 + base2
 
@@ -104,12 +115,25 @@ def main(argv):
 
                 score = (
                     score1 + score2 +
+                    len(cons1) * len(cons1) +
+                    len(cons2) * len(cons2) +
                     len(new1) + len(new2) + len(set(new1) | set(new2))
                 )
 
                 scores[pair] = score
 
-        wows_only = True
+        if options.debug:
+            s = []
+            for pair, score in scores.iteritems():
+                s.append((score, pair))
+            print ' '.join(sentence)
+            for (score, pair) in sorted(s, reverse=True):
+                print score, pair
+            for wow in wows:
+                print "WOW", wow
+            print
+
+        wows_only = False
         if wows_only and not wows:
             continue
         if wows_only:
