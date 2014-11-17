@@ -2,18 +2,18 @@ NaNoGenLab
 ==========
 
 Herein may be found novel-generation experiments for [NaNoGenMo 2014][]
-(and possibly beyond) conducted under the auspices of [Cat's Eye Technologies][].
+conducted under the auspices of [Cat's Eye Technologies][].
 
 Note that the word "experiment", like the word "novel", may mean many things.
 
 > Isaac Asimov has suggested a triage process which divides scientific
 > claims into three groups: mundane, unusual and hogwash [my terms].
-> As an example, a claim that "I have computer-generated 50K words of text"
+> As an example, a claim that "My computer has generated 50,000 words of text"
 > is pretty mundane.  No-one would disbelieve me, but they wouldn't be very
-> interested.  A claim that "I have computer-generated a 50k-word story" would
-> probably result in mild disbelief and requests to have a look.  Finally, a
-> claim that "I have computer-generated a 50k-word [novel][]" would be greeted
-> with cries of "Hogwash!"
+> interested.  A claim that "My computer has generated a 50,000-word story"
+> would probably result in mild disbelief and requests to have a look.  Finally,
+> a claim that "My computer has generated a 50,000-word [novel][]" would be
+> greeted with cries of "Hogwash!"
 
 — _with apologies to the sci.skeptic FAQ_
 
@@ -60,15 +60,20 @@ they were finished), the experiments have been:
 26. levenshtein-word-replacement
 27. sensible-paste-up*
 28. joke-o-matic
-29. naive-spoonerizer
+29. levenshtein-swapper
 30. advanced-spoonerizer*
 
 A * indicates that they could still use a bit of work before I'm entirely
 happy with them.
 
 Anything not listed there is either a piece of lab equipment, a collection
-of corpora, or just wasn't deemed to be experimental enough to be an
-experiment.
+of materials, or just wasn't deemed to be experimental enough to be an
+experiment.  Some of these are:
+
+* generic-corpora (materials)
+* fetch-chronam (lab equipment)
+* narrow-cut-up (not different enough from naive-cut-up)
+* naive-spoonerizer (not different enough from advanced-spoonerizer)
 
 [NaNoGenMo 2014]:         https://github.com/dariusk/NaNoGenMo-2014
 [Cat's Eye Technologies]: http://catseye.tc/
