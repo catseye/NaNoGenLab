@@ -1,16 +1,22 @@
 naive-cut-up
 ============
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that if we cut up a newspaper.  We also hypothesize that
+we cut up a newspaper.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   [Pillow](http://python-pillow.github.io/) (it might work with PIL too)
 *   Some scanned images of newspapers, books, etc., in PNG format, for example
     obtained by [fetch-chronam](../fetch-chronam/)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Start with "blank" canvas.  For simplicity, we actually use one of the
     input images as the "canvas".
@@ -18,8 +24,7 @@ Basic Strategy
 *   Copy the image within the rectangle to a random location on the canvas.
 *   Repeat from step 2 until we guess we've covered the canvas.
 
-Usage
------
+### Detailed procedure ###
 
 First, we assume some PNGs of scanned newspaper pages involving some topic
 (in this example, cheese) have been obtained.  (PNG format is probably not
@@ -60,8 +65,8 @@ And then we marvel at the result:
 
 (You may wish to use a less clumsy image viewer than Ristretto, yourself.)
 
-Sample Output
--------------
+Observations
+------------
 
 It may be difficult to tell in this scaled-down sample, but the result was
 surprisingly thematic in its reference to cheese:

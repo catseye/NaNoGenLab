@@ -1,23 +1,28 @@
 evaporating-text
 ================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that a novel, under the right circumstances, can evaporate.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   An input text (possibly from Project Gutenberg)
 
-Basic Strategy
---------------
+Method
+------
 
 *   Collect all the sentences and count them: _s_ is the number of sentences.
 *   In each sentence, erase words.  The probability of a word being erased
     is _n_/_s_ where _n_ is the sentence number;.the first sentence is
     numbered 0.
 
-Sample Output
--------------
+Observations
+------------
 
 When run on Voltaire's "Candide": at the beginning...
 

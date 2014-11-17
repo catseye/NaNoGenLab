@@ -1,23 +1,30 @@
 ending-concordance
 ==================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that words in English can be roughly categorized using a
+characteristic as simple as the pair of letters that they end with, and
+that this can be exploited to form sentences which look almost plausible.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
 *   A bunch of Project Gutenberg texts in plain text format
 
-Basic Strategy
---------------
+Method
+------
 
 *   Read in all the words.
 *   Index the words based on the final two letters in each word that is four or
     more letters long.
 *   Write out words randomly chosen from two alternating end-two-letters groups.
 
-Sample Output
--------------
+Observations
+------------
 
 When run on _Principles of Scientific Management_, I got:
 

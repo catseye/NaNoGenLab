@@ -1,14 +1,20 @@
 infix-neologisms
 ================
 
-Requirements
-------------
+Hypothesis
+----------
+
+We hypothesize that new words can be formed from existing words by splitting
+them open and sticking a word inside.
+
+Apparatus
+---------
 
 *   Python 2.7.6 (probably works with older versions too)
 *   A set of input words
 
-Basic Strategy
---------------
+Method
+------
 
 *   Pick an input word.
 *   Split it into two parts.  Pick another input word and insert it in
@@ -16,8 +22,8 @@ Basic Strategy
 *   Possibly repeat step #2.
 *   Output the word and repeat from step #1.
 
-Sample Output
--------------
+Observations
+------------
 
 Running it on `../generic-corpora/containers.txt` which I just threw together
 after a few internet searches, you might get
