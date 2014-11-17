@@ -14,6 +14,7 @@ TEMPLATES = [
     "$1 and $2",
     "$1 can't understand $2",
     "$1 is no $2",
+    "$1, being $1, is $2",
 ]
 
 
@@ -33,33 +34,35 @@ def get_fresh_var():
 
 
 def rename_variables(text):
-    variables = []
-    n = ''
+    replacements = {}
+    new = ''
     while text:
         if text[0] != '$':
-            n += text[0]
+            new += text[0]
             text = text[1:]
         else:
             text = text[1:]
+            v = '$'
             while text and text[0].isdigit():
+                v += text[0]
                 text = text[1:]
-            v = get_fresh_var()
-            n += v
-            variables.append(v)
-    return n, variables
+            new += replacements.setdefault(v, get_fresh_var())
+    return new
 
 
 def get_variables(text):
-    v = 1
-    variables = []
-    while True:
-        variable = '${0}'.format(v)
-        if variable in text:
-            variables.append(variable)
-            v += 1
+    variables = set()
+    while text:
+        if text[0] != '$':
+            text = text[1:]
         else:
-            break
-    return text, variables
+            text = text[1:]
+            v = '$'
+            while text and text[0].isdigit():
+                v += text[0]
+                text = text[1:]
+            variables.add(v)
+    return list(variables)
 
 
 def main(argv):
@@ -82,16 +85,12 @@ def main(argv):
 
     text = random.choice(TEMPLATES)
 
-    acquire_variables = rename_variables
-    if options.no_variable_renaming:
-        acquire_variables = get_variables
-
     if DEBUG:
         print text
         print 
 
     for i in xrange(0, int(options.generations)):
-        (text, variables) = acquire_variables(text)
+        variables = get_variables(text)
 
         if DEBUG:
             print text, variables
@@ -99,6 +98,9 @@ def main(argv):
 
         for variable in variables:
             replacement = random.choice(TEMPLATES)
+            if not options.no_variable_renaming:
+                replacement = rename_variables(replacement)
+
             text = text.replace(variable, replacement)
 
         if DEBUG:
@@ -108,8 +110,7 @@ def main(argv):
 
     #print text + '!'
 
-    (text, variables) = acquire_variables(text)
-    for variable in variables:
+    for variable in get_variables(text):
         replacement = random.choice(NOUNS)
         text = text.replace(variable, replacement)
 

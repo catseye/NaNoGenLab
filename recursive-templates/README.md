@@ -40,11 +40,10 @@ slash grammar productions, i.e. `$V1 blah $N1 blah $N2`.
 When I started writing it I didn't immediately realize that special handling
 would be needed to treat the variables as local to the template.  But once I
 realized that, I saw it was not dissimilar to how variables work in pattern
-matching and unification and such.  In this, we just textually replace each
-variable with a "fresh" variable with a unique number.  (NOTE: there is
-totally a grievous bug in this, which doesn't affect the current templates,
-but would if there were repeated variables in them, which I will fix as soon
-as I have done the 30 experiments thing.)
+matching and unification and such.  In this, when picking a sub-template,
+we just textually replace each variable in that sub-template with a "fresh"
+variable with a unique number, before inserting the sub-template into the
+master template.
 
 There is a command-line option which explicitly *does not* do this, so you
 can see what it's like treating the variables as "global" to the
