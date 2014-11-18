@@ -27,7 +27,7 @@ to shanties.
 Observations
 ------------
 
-    $ ./shanty-generator.py It was the best of times it was the worst of times
+    $ ./shanty-generator.py two_cities.txt
     It, was-was,
     It, was-was,
     the-the best!
