@@ -32,7 +32,7 @@ ASCII_LETTERS = set(string.uppercase)
 def main(argv):
     optparser = OptionParser(__doc__)
     optparser.add_option("--debug", default=False, action='store_true',
-                         help="show me the SpoonerScores<tm>")
+                         help="show me the SchoonerSpores[tm]")
     (options, args) = optparser.parse_args(argv[1:])
 
     filenames = args
