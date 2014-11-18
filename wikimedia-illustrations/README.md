@@ -58,9 +58,3 @@ illustrations taken from the PD-Gutenberg category.  It should give you an
 idea of what to expect.
 
 ![Randomly illustrated Lorem Ipsum Shkoo](sample-screenshot.jpg)
-
-Future work
------------
-
-Add a flag that looks for the "guaranteed public domain" text on the media
-page and only downloads if it finds it.

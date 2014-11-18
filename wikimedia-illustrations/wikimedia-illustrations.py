@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+from optparse import OptionParser
 import random
 import re
 
@@ -21,7 +22,7 @@ def comply_with_terms_of_use():
     sleep(8)
 
 
-def get_image_from_page(url, local_filename):
+def get_image_from_page(url, local_filename, insist_on_pd_mark=False):
     # We grab the original file.  It may be bigger than we need, but we can
     # scale it down later.
     if os.path.exists(local_filename):
@@ -30,6 +31,16 @@ def get_image_from_page(url, local_filename):
 
     img_filename = url.split(':')[-1]
     soup = BeautifulSoup(requests.get(url).content)
+
+    if insist_on_pd_mark:
+        url_part = u'//creativecommons.org/publicdomain/mark/1.0/deed'
+        mark_links = [link for link in soup.find_all('a')
+                      if url_part in unicode(link.get('href'))]
+        if not mark_links:
+            print "...no public domain mark found!"
+            return False
+        print "Found public domain mark!  Continuing..."
+
     orig_links = [link for link in soup.find_all('a')
                   if link.get_text() in ('Original file', img_filename)]
     assert orig_links, \
@@ -85,15 +96,25 @@ def load_index(filename):
     return index
 
 
-def get_random_image(index, dest_dir):
+def get_random_image(index, dest_dir, insist_on_pd_mark=False):
     media_url = random.choice(index)
     print media_url
     local_filename = os.path.join(dest_dir, media_url.split(':')[-1])
-    get_image_from_page(media_url, local_filename)
+    get_image_from_page(
+        media_url, local_filename, insist_on_pd_mark=insist_on_pd_mark
+    )
     return local_filename
 
 
 def main(argv):
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--insist-on-pd-mark", default=False, action='store_true',
+                         help="only download if media page contains public domain mark")
+    (options, args) = optparser.parse_args(argv[1:])
+
+    # BAHHH
+    argv = ['whatevs'] + args
+
     if argv[1] == 'mkindex':
         category = argv[2]
         index_url = 'http://commons.wikimedia.org/wiki/Category:' + category
@@ -127,14 +148,20 @@ def main(argv):
     elif argv[1] == 'get':
         media_url = argv[2]
         local_filename = media_url.split(':')[-1]
-        get_image_from_page(media_url, local_filename)
+        get_image_from_page(
+            media_url, local_filename,
+            insist_on_pd_mark=options.insist_on_pd_mark
+        )
 
     elif argv[1] == 'getmany':
         with open(argv[2]) as f:
             for line in f:
                 media_url = line.strip()
                 local_filename = media_url.split(':')[-1]
-                get_image_from_page(media_url, local_filename)
+                get_image_from_page(
+                    media_url, local_filename,
+                    insist_on_pd_mark=options.insist_on_pd_mark
+                )
 
     elif argv[1] == 'convertmany':
         dest_dir = argv[2]
@@ -155,7 +182,9 @@ def main(argv):
         dest_dir = argv[3]
         index = load_index(argv[4])
         for n in xrange(0, count):
-            get_random_image(index, dest_dir)
+            get_random_image(
+                index, dest_dir, insist_on_pd_mark=options.insist_on_pd_mark
+            )
 
     elif argv[1] == 'render':
         count = int(argv[2])
@@ -178,7 +207,9 @@ hr { page-break-before: always; }
 
         body = ''
         for x in xrange(0, count):
-            filename = get_random_image(index, dest_dir)
+            filename = get_random_image(
+                index, dest_dir, insist_on_pd_mark=options.insist_on_pd_mark
+            )
             filename = convert_image(filename)
 
             if x != 0:
