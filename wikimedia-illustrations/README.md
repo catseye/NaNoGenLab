@@ -53,11 +53,14 @@ good idea to double-check.
 This is all pretty crazy and a piece of lab equipment should really be broken
 off of it.
 
-TODO
-----
+But anyway, this is what the end result looked like (for me), using
+illustrations taken from the PD-Gutenberg category.  It should give you an
+idea of what to expect.
+
+![Randomly illustrated Lorem Ipsum Shkoo](sample-screenshot.jpg)
+
+Future work
+-----------
 
 Add a flag that looks for the "guaranteed public domain" text on the media
 page and only downloads if it finds it.
-
-Research paper size specification/usage in CSS3/HTML.  Ideally we'd like to
-be able to specify image sizes in inches assuming a printed page, or smth.
