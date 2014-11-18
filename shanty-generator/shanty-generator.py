@@ -21,7 +21,13 @@ TEMPLATES = [
 ^$1, $2-$2,
 ^$3-$3 $4!
 ^$3-$3 $4!
-"""
+""",
+    """\
+^$1!  (^$1!)
+^$2!  (^$2!)
+^$1 $2 $3-$3 $4,
+^$5, $5, $5.
+""",
 ]
 
 
@@ -32,18 +38,18 @@ def get_variables(text):
             text = text[1:]
         else:
             text = text[1:]
-            v = '$'
+            v = ''
             while text and text[0].isdigit():
                 v += text[0]
                 text = text[1:]
-            variables.add(v)
+            variables.add(int(v))
     return list(variables)
 
 
-def fillout(template, words):
-    for n in xrange(0, 4):
-        template = template.replace('^$%s' % (n+1), words[n].capitalize())
-        template = template.replace('$%s' % (n+1), words[n])
+def fillout(template, variables, words):
+    for var in variables:
+        template = template.replace('^$%s' % var, words[var-1].capitalize())
+        template = template.replace('$%s' % var, words[var-1])
     return template
 
 
@@ -77,9 +83,10 @@ def main(argv):
         if len(use_words) == len(variables):
             words = words[len(variables):]
         else:
-            use_words += ['***'] * (len(variables) - len(use_words))
+            while len(use_words) < len(variables):
+                use_words.append(random.choice(['yo', 'ho', 'hey']))
             words = []
-        print fillout(template, use_words)
+        print fillout(template, variables, use_words)
 
 
 if __name__ == '__main__':

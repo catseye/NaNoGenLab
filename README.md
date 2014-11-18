@@ -43,7 +43,7 @@ they were finished), the experiments have been:
 9. poetic-inventory
 10. wikimedia-illustrations*
 11. evaporating-text
-12. shanty-generator*
+12. shanty-generator
 13. reluctance-generator
 14. columnar-cthulhuian
 15. ending-concordance
