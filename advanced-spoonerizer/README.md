@@ -64,8 +64,6 @@ scoring one isn't always the "best", but it's often hard to say why the
 Future work
 -----------
 
-Retain paragraph breaks.
+Treat `,` and `--` and clause seperators.
 
-Treat clauses sensibly.
-
-Keep tweaking the score.
+Keep tweaking the score.  Don't swap "that" and "what".
