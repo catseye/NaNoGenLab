@@ -84,10 +84,7 @@ def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
     """The SchoonerSpore[tm] is a tuple of
     (dictionary_score, promiximity_score, sentence_score)"""
 
-    dict_score1 = dictionary_score(new1)
-    dict_score2 = dictionary_score(new2)
-    bonus = 5 if dict_score1 and dict_score2 else 1
-    dict_score = (dict_score1 + dict_score2) * bonus
+    dict_score = dictionary_score(new1) + dictionary_score(new2)
 
     promiximity_score = 0 - (pos1 - pos2) ** 2
 
@@ -134,11 +131,18 @@ def main(argv):
 
     sentences.append(sentence)
 
+    def valid_word(w):
+        if len(clean(w)) > 2 and w[0].isalpha():
+            return True
+        return False
+
     for sentence in sentences:
         scores = {}  # frozenset of two (word, pos) tuples -> score
         for (pos1, word1) in enumerate(sentence):
             for (pos2, word2) in enumerate(sentence):
                 if word1 == word2:
+                    continue
+                if (not valid_word(word1)) or (not valid_word(word2)):
                     continue
 
                 (cons1, base1) = strip_initial_consonants(word1)
