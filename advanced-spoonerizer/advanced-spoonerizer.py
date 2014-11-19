@@ -29,14 +29,26 @@ DICTIONARY = {}
 ASCII_LETTERS = set(string.uppercase)
 
 
-def main(argv):
-    optparser = OptionParser(__doc__)
-    optparser.add_option("--debug", default=False, action='store_true',
-                         help="show me the SchoonerSpores[tm]")
-    (options, args) = optparser.parse_args(argv[1:])
+def clean(word):
+    if word.endswith(('.', '!', '?', ';', ',')):
+        word = word[:-1]
+    if word.startswith(('"', "'", '(')):
+        word = word[1:]
+    if word.endswith(('"', "'", ')')):
+        word = word[:-1]
+    if word.endswith(('.', '!', '?', ';', ',')):
+        word = word[:-1]
+    return word.upper()
 
-    filenames = args
 
+def dictionary_score(word):
+    """Score for a dictionary word is the number of unique letters in
+    the word, or 0 if the word is not in the dictionary."""
+    z = DICTIONARY.get(clean(word), 0)
+    return z
+
+
+def load_dictionary():
     with open('/usr/share/dict/words', 'r') as f:
         for line in f:
             word = line.strip().upper()
@@ -45,20 +57,32 @@ def main(argv):
                 continue
             DICTIONARY[word] = len(letters)
 
-    def clean(word):
-        if word.endswith(('.', '!', '?', ';', ',')):
-            word = word[:-1]
-        if word.startswith(('"', "'", '(')):
-            word = word[1:]
-        if word.endswith(('"', "'", ')')):
-            word = word[:-1]
-        if word.endswith(('.', '!', '?', ';', ',')):
-            word = word[:-1]
-        return word.upper()
 
-    def dictionary_score(word):
-        z = DICTIONARY.get(clean(word), 0)
-        return z
+def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
+    score1 = dictionary_score(new1) * 100
+    score2 = dictionary_score(new2) * 100
+
+    if score1 > 0 and score2 > 0:
+        score1 *= 100
+        score2 *= 100
+
+    return (
+        score1 + score2 +
+        len(cons1) * len(cons1) +
+        len(cons2) * len(cons2) +
+        len(new1) + len(new2) + len(set(new1) | set(new2))
+    )
+
+
+def main(argv):
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--debug", default=False, action='store_true',
+                         help="show me the SchoonerSpores[tm]")
+    (options, args) = optparser.parse_args(argv[1:])
+
+    filenames = args
+
+    load_dictionary()
 
     words = []
 
@@ -85,6 +109,9 @@ def main(argv):
 
     sentences.append(sentence)
 
+    # score is (or should be) a tuple.
+    # (dictionary_score, sentence_score)
+
     for sentence in sentences:
         scores = {}  # frozenset of two (word, pos) tuples -> score
         wows = []
@@ -105,22 +132,9 @@ def main(argv):
 
                 pair = frozenset([(word1, new1, pos1), (word2, new2, pos2)])
 
-                score1 = dictionary_score(new1) * 100
-                score2 = dictionary_score(new2) * 100
-
-                if score1 > 0 and score2 > 0:
-                    wows.append(pair)
-                    score1 *= 100
-                    score2 *= 100
-
-                score = (
-                    score1 + score2 +
-                    len(cons1) * len(cons1) +
-                    len(cons2) * len(cons2) +
-                    len(new1) + len(new2) + len(set(new1) | set(new2))
+                scores[pair] = calculate_schooner_spore(
+                    cons1, new1, pos1, cons2, new2, pos2
                 )
-
-                scores[pair] = score
 
         if options.debug:
             s = []
