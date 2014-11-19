@@ -99,6 +99,9 @@ def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
 AWFUL_SCORE = (-1000, -1000, -1000)
 
 
+PARAGRAPH_BREAK = object()
+
+
 def main(argv):
     optparser = OptionParser(__doc__)
     optparser.add_option("--debug", default=False, action='store_true',
@@ -116,10 +119,18 @@ def main(argv):
             for line in SentinelCleaner(f).lines():
                 line = line.replace('--', ' -- ')
                 words.extend(line.split())
+                if line == '':
+                    words.append(PARAGRAPH_BREAK)
 
     sentences = []
     sentence = []
     for word in words:
+        if word is PARAGRAPH_BREAK:
+            if sentence:
+                sentences.append(sentence)
+                sentence = []
+            sentences.append(PARAGRAPH_BREAK)
+            continue
         if word.startswith(('"', "'")):
             word = word[1:]
         if word.endswith(('"', "'")):
@@ -137,6 +148,9 @@ def main(argv):
         return False
 
     for sentence in sentences:
+        if sentence is PARAGRAPH_BREAK:
+            sys.stdout.write('\n\n')
+            continue
         scores = {}  # frozenset of two (word, pos) tuples -> score
         for (pos1, word1) in enumerate(sentence):
             for (pos2, word2) in enumerate(sentence):
