@@ -104,7 +104,7 @@ AWFUL_SCORE = (-1000, -1000, -1000)
 
 
 def adjust_case(new, orig):
-    if all([x.isupper() for x in orig]):
+    if all([x.isupper() for x in orig if x.isalpha()]):
         return new.upper()
     if orig[0].isupper():
         return new.capitalize()
@@ -131,7 +131,7 @@ def main(argv):
     for filename in filenames:
         with open(filename, 'r') as f:
             for line in SentinelCleaner(f, pre=options.pre).lines():
-                line = line.replace('--', ' -- ')
+                line = line.replace('--', '-- ')
                 words.extend(line.split())
                 if line == '' and words[-1] is not PARAGRAPH_BREAK:
                     words.append(PARAGRAPH_BREAK)
@@ -150,7 +150,8 @@ def main(argv):
         if word.endswith(('"', "'")):
             word = word[:-1]
         sentence.append(word)
-        if word not in ('Mr.', 'Mrs.', 'Dr.') and word.endswith(('.', '!', '?', ';', ':')):
+        if (word not in ('Mr.', 'Mrs.', 'Dr.') and
+            word.endswith(('.', '!', '?', ';', ':', ',', '--'))):
             sentences.append(sentence)
             sentence = []
 

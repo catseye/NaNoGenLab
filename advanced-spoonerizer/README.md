@@ -64,6 +64,6 @@ scoring one isn't always the "best", but it's often hard to say why the
 Future work
 -----------
 
-Treat `,` and `--` and clause seperators.
-
-Keep tweaking the score.  Don't swap "that" and "what".
+Keep tweaking the score.  Don't swap "that" and "what".  Also problematic:
+"and" (using it or resulting in it, e.g. swapping off the "h" in "hand".)
+Should dock the scores for those.
