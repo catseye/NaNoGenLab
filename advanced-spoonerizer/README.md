@@ -11,21 +11,23 @@ Apparatus
 ---------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
-*   A novel from Gutenberg, or other text
+*   A novel from Gutenberg, or other text that begins with `CHAPTER`
 *   `/usr/share/dict/words`
 
 Method
 ------
 
 *   Read all the sentences from the text, arranged into sentences.
-*   In each sentence, enumerate all pairings of words.
+*   In each sentence, find all clauses.
+*   In each clause, enumerate all pairings of words.
 *   For each pairing, try swapping the initial consonant clusters.
-    Give each pairing a score based on whether one or both are dictionary
-    words (in which case make the score exceedingly high) and the lengths
-    of the words and the number of unique letters involved.
+    Assign each pairing a SchoonerSpore[tm] based on:
+    *   whether one or both of the new words are dictionary words
+    *   the distance the words are from each other
+    *   the lengths of the words and the consonant clusters
+    *   the number of unique letters involved.
 *   Swap the consonant clusters on the highest-scoring pairing and output
-    the sentence.
+    the clause.
 
 Observations
 ------------
@@ -58,3 +60,12 @@ heuristic.  If you run with `--debug` you are shown a list of all possible
 Spoonerisms for each sentence, sorted by descending score.  The highest
 scoring one isn't always the "best", but it's often hard to say why the
 2nd or 3rd ranked one might be "better".
+
+Future work
+-----------
+
+Retain paragraph breaks.
+
+Treat clauses sensibly.
+
+Keep tweaking the score.

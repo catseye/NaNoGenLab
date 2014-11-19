@@ -4,13 +4,38 @@ from optparse import OptionParser
 import random
 import string
 
-from gutenberg import GutenbergCleaner
-
 try:
     from tqdm import tqdm
 except ImportError:
     def tqdm(x):
         return x
+
+
+class SentinelCleaner(object):
+    """Given a file-like object, gives you the lines between the start
+    sentinel (inclusive) and the end sentinel (exclusive.)"""
+
+    def __init__(self, fh, start='CHAPTER', end='End of Project Gutenberg'):
+        self.fh = fh
+        self.start = start
+        self.end = end
+        self.state = 'pre'
+
+    def lines(self):
+        for line in self.fh:
+            line = line.strip()
+            if self.state == 'pre':
+                if line.startswith(self.start):
+                    self.state = 'mid'
+                    yield line
+            elif self.state == 'mid':
+                if line.startswith(self.end):
+                    self.state = 'post'
+                else:
+                    yield line
+            else:
+                assert self.state == 'post'
+                pass
 
 
 MIN_LENGTH = 4
@@ -19,7 +44,7 @@ VOWELS = 'aeiouAEIOU'
 
 def strip_initial_consonants(word):
     init = ''
-    while word and word[0] not in VOWELS:
+    while word and word[0].isalpha() and word[0] not in VOWELS:
         init += word[0]
         word = word[1:]
     return (init, word)
@@ -94,9 +119,7 @@ def main(argv):
 
     for filename in filenames:
         with open(filename, 'r') as f:
-            c = GutenbergCleaner(f)
-            lines = c.extract_text().split('\n')
-            for line in lines:
+            for line in SentinelCleaner(f).lines():
                 bits = line.split()
                 for bit in bits:
                     words.extend(bit.split('--'))
