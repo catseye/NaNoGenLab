@@ -67,10 +67,7 @@ def clean(word):
 
 
 def dictionary_score(word):
-    """Score for a dictionary word is the number of unique letters in
-    the word, or 0 if the word is not in the dictionary."""
-    z = DICTIONARY.get(clean(word), 0)
-    return z
+    return 1 if clean(word) in DICTIONARY else 0
 
 
 def load_dictionary():
@@ -120,9 +117,8 @@ def main(argv):
     for filename in filenames:
         with open(filename, 'r') as f:
             for line in SentinelCleaner(f).lines():
-                bits = line.split()
-                for bit in bits:
-                    words.extend(bit.split('--'))
+                line = line.replace('--', ' -- ')
+                words.extend(line.split())
 
     sentences = []
     sentence = []

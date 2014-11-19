@@ -69,3 +69,6 @@ Retain paragraph breaks.
 Treat clauses sensibly.
 
 Keep tweaking the score.
+
+Invalid words, don't even consider them for swaps: anything 2 letters or
+less; anything not containing any letters.
