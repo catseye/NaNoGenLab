@@ -41,7 +41,7 @@ they were finished), the experiments have been:
 7. eliza-vs-eliza
 8. naive-cut-up
 9. poetic-inventory
-10. wikimedia-illustrations*
+10. wikimedia-illustrations
 11. evaporating-text
 12. shanty-generator
 13. reluctance-generator
@@ -72,6 +72,7 @@ experiment.  Some of these are:
 
 * generic-corpora (materials)
 * fetch-chronam (lab equipment)
+* image-calipers (lab equipment)
 * narrow-cut-up (not different enough from naive-cut-up)
 * naive-spoonerizer (not different enough from advanced-spoonerizer)
 

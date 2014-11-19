@@ -24,15 +24,14 @@ Method
 Observations
 ------------
 
-This was intended to be run on "Selected Entries from the D'ksuban Dictionary",
+This was intended to be run on _[Selected Entries from the D'skuban Dictionary][]_,
 however since I am not certain of the copyright status of that work and I am
-trying to keep this repository fully public domain, I won't include any sample
-output based on it here.
-
-I will however post the output on a Github gist and provide a link here.
+trying to keep this repository fully public domain, the results from that —
+entitled _[Excerpts from "Appreciating the Great D'skuban Playwrights, Vol. I][]_
+— are also hosted elsewhere on Github.
 
 Here is some output from it running on the trivial test dictionary found in
-this directory:
+this directory, though:
 
 > > "... vlarthoon ..."
 > 
@@ -41,3 +40,6 @@ this directory:
 > but if we consider that perhaps we are meant to take this as _vlart-hoon_
 > ("the condition or state of being coloured yellow", and "the third gear of a bicycle"),
 > another level of meaning is apparent.
+
+[Selected Entries from the D'skuban Dictionary]: https://raw.githubusercontent.com/samcoppini/Dictionary/master/Selected%20Entries%20from%20the%20D%27ksuban%20Dictionary.txt
+[Excerpts from "Appreciating the Great D'skuban Playwrights, Vol. I]: https://gist.github.com/cpressey/64b2b88b9ac7d86abda3
