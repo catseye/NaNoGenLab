@@ -5,7 +5,7 @@ Hypothesis
 ----------
 
 I hypothesize that we can learn a lot from the works of the D'skuban
-playwrights — if only we can decipher their convoluted plays on words.
+playwrights — if only we can decipher their convoluted puns.
 
 Apparatus
 ---------
@@ -29,7 +29,15 @@ however since I am not certain of the copyright status of that work and I am
 trying to keep this repository fully public domain, I won't include any sample
 output based on it here.
 
-I will however post some to Github and provide a link here.
+I will however post the output on a Github gist and provide a link here.
 
-I will run it on some public domain sample data and put some sample output
-here at some point, though.
+Here is some output from it running on the trivial test dictionary found in
+this directory:
+
+> > "... vlarthoon ..."
+> 
+> Here we see the playwright has used the word _vlarthoon_
+> ("a kind of ornamental sword"),
+> but if we consider that perhaps we are meant to take this as _vlart-hoon_
+> ("the condition or state of being coloured yellow", and "the third gear of a bicycle"),
+> another level of meaning is apparent.
