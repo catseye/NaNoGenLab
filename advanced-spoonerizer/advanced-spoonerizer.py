@@ -59,19 +59,21 @@ def load_dictionary():
 
 
 def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
-    score1 = dictionary_score(new1) * 100
-    score2 = dictionary_score(new2) * 100
+    """The SchoonerSpore[tm] is a tuple.
+    (dictionary_score, sentence_score)"""
 
-    if score1 > 0 and score2 > 0:
-        score1 *= 100
-        score2 *= 100
+    dict_score1 = dictionary_score(new1)
+    dict_score2 = dictionary_score(new2)
+    bonus = 5 if dict_score1 and dict_score2 else 1
+    dict_score = (dict_score1 + dict_score2) * bonus
 
-    return (
-        score1 + score2 +
+    sentence_score = (
         len(cons1) * len(cons1) +
         len(cons2) * len(cons2) +
         len(new1) + len(new2) + len(set(new1) | set(new2))
     )
+
+    return (dict_score, sentence_score)
 
 
 def main(argv):
@@ -109,12 +111,8 @@ def main(argv):
 
     sentences.append(sentence)
 
-    # score is (or should be) a tuple.
-    # (dictionary_score, sentence_score)
-
     for sentence in sentences:
         scores = {}  # frozenset of two (word, pos) tuples -> score
-        wows = []
         for (pos1, word1) in enumerate(sentence):
             for (pos2, word2) in enumerate(sentence):
                 if word1 == word2:
@@ -143,17 +141,9 @@ def main(argv):
             print ' '.join(sentence)
             for (score, pair) in sorted(s, reverse=True):
                 print score, pair
-            for wow in wows:
-                print "WOW", wow
             print
 
-        wows_only = False
-        if wows_only and not wows:
-            continue
-        if wows_only:
-            print wows
-
-        best_score = -1
+        best_score = (-1, -1)
         best_pair = None
         for pair, score in scores.iteritems():
             if score > best_score:
