@@ -59,13 +59,15 @@ def load_dictionary():
 
 
 def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
-    """The SchoonerSpore[tm] is a tuple.
-    (dictionary_score, sentence_score)"""
+    """The SchoonerSpore[tm] is a tuple of
+    (dictionary_score, promiximity_score, sentence_score)"""
 
     dict_score1 = dictionary_score(new1)
     dict_score2 = dictionary_score(new2)
     bonus = 5 if dict_score1 and dict_score2 else 1
     dict_score = (dict_score1 + dict_score2) * bonus
+
+    promiximity_score = 0 - (pos1 - pos2) ** 2
 
     sentence_score = (
         len(cons1) * len(cons1) +
@@ -73,7 +75,9 @@ def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
         len(new1) + len(new2) + len(set(new1) | set(new2))
     )
 
-    return (dict_score, sentence_score)
+    return (dict_score, promiximity_score, sentence_score)
+
+AWFUL_SCORE = (-1000, -1000, -1000)
 
 
 def main(argv):
@@ -105,7 +109,7 @@ def main(argv):
         if word.endswith(('"', "'")):
             word = word[:-1]
         sentence.append(word)
-        if word not in ('Mr.', 'Mrs.', 'Dr.') and word.endswith(('.', '!', '?')):
+        if word not in ('Mr.', 'Mrs.', 'Dr.') and word.endswith(('.', '!', '?', ';', ':')):
             sentences.append(sentence)
             sentence = []
 
@@ -143,7 +147,7 @@ def main(argv):
                 print score, pair
             print
 
-        best_score = (-1, -1)
+        best_score = AWFUL_SCORE
         best_pair = None
         for pair, score in scores.iteritems():
             if score > best_score:
