@@ -17,11 +17,11 @@ class SentinelCleaner(object):
     sentinel (exclusive) and the end sentinel (exclusive.)"""
 
     def __init__(self, fh,
-                 start='Produced by',
-                 end_re=r'^End\s+of\s+(the\s+)?Project\s+Gutenberg.*?$',
+                 start_re='^(E\-?TEXT\s+)?(PRODUCED\s+BY|PREPARED\s+BY).*?$',
+                 end_re=r'^\**\s*END\s+OF\s+(THE\s+)?PROJECT\s+GUTENBERG.*?$',
                  pre=None):
         self.fh = fh
-        self.start = start
+        self.start_re = start_re
         self.end_re = end_re
         self.pre = pre
         self.state = 'pre'
@@ -33,14 +33,14 @@ class SentinelCleaner(object):
         for line in self.fh:
             line = line.strip()
             if self.state == 'pre':
-                if line.startswith(self.start):
+                match = re.match(self.start_re, line.upper())
+                if match:
                     self.state = 'consuming-produced-by'
-                    #yield line
             elif self.state == 'consuming-produced-by':
                 if not line:
                     self.state = 'mid'
             elif self.state == 'mid':
-                match = re.match(self.end_re, line)
+                match = re.match(self.end_re, line.upper())
                 if match:
                     self.state = 'post'
                 else:

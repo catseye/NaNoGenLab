@@ -11,37 +11,6 @@ except ImportError:
         return x
 
 
-class SentinelCleaner(object):
-    """Given a file-like object, gives you the lines between the start
-    sentinel (inclusive) and the end sentinel (exclusive.)"""
-
-    def __init__(self, fh, start='CHAPTER', end='End of Project Gutenberg', pre=None):
-        self.fh = fh
-        self.start = start
-        self.end = end
-        self.pre = pre
-        self.state = 'pre'
-
-    def lines(self):
-        if self.pre:
-            yield self.pre
-            yield ''
-        for line in self.fh:
-            line = line.strip()
-            if self.state == 'pre':
-                if line.startswith(self.start):
-                    self.state = 'mid'
-                    yield line
-            elif self.state == 'mid':
-                if line.startswith(self.end):
-                    self.state = 'post'
-                else:
-                    yield line
-            else:
-                assert self.state == 'post'
-                pass
-
-
 MIN_LENGTH = 4
 VOWELS = 'aeiouAEIOU'
 
@@ -116,8 +85,6 @@ PARAGRAPH_BREAK = object()
 
 def main(argv):
     optparser = OptionParser(__doc__)
-    optparser.add_option("--pre", default=None,
-                         help="text to add to beginning of input document")
     optparser.add_option("--debug", default=False, action='store_true',
                          help="show me the SchoonerSpores[tm]")
     (options, args) = optparser.parse_args(argv[1:])
@@ -130,8 +97,8 @@ def main(argv):
 
     for filename in filenames:
         with open(filename, 'r') as f:
-            for line in SentinelCleaner(f, pre=options.pre).lines():
-                line = line.replace('--', '-- ')
+            for line in f:
+                line = line.strip().replace('--', '-- ')
                 words.extend(line.split())
                 if line == '' and words[-1] is not PARAGRAPH_BREAK:
                     words.append(PARAGRAPH_BREAK)
@@ -207,7 +174,8 @@ def main(argv):
                 best_pair = pair
 
         if best_pair is None:
-            sys.stdout.write('*' + ' '.join(sentence) + '* ')
+            #sys.stdout.write('*' + ' '.join(sentence) + '* ')
+            sys.stdout.write(' '.join(sentence) + ' ')
         else:
             best_pair = list(best_pair)
             (word1, new1, pos1) = best_pair[0]

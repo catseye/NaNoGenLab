@@ -11,7 +11,7 @@ Apparatus
 ---------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   A novel from Gutenberg, or other text that begins with `CHAPTER`
+*   An input text (perhaps a pre-cleaned novel from Project Gutenberg)
 *   `/usr/share/dict/words`
 
 Method
