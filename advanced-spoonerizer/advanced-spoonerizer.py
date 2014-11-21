@@ -11,12 +11,14 @@ except ImportError:
         return x
 
 
-MIN_LENGTH = 4
-VOWELS = 'aeiouAEIOU'
+VOWELS = 'aeiouyAEIOUY'
 
 
 def strip_initial_consonants(word):
     init = ''
+    if word[0] in 'yY':
+        init += word[0]
+        word = word[1:]
     while word and word[0].isalpha() and word[0] not in VOWELS:
         init += word[0]
         word = word[1:]
@@ -43,12 +45,13 @@ def dictionary_score(word):
     return 1 if clean(word) in DICTIONARY else 0
 
 
-def load_dictionary():
+def load_dictionary(exclude):
+    exclude = set([e.upper() for e in exclude])
     with open('/usr/share/dict/words', 'r') as f:
         for line in f:
             word = line.strip().upper()
             letters = set(word)
-            if len(word) <= 2 or not letters <= ASCII_LETTERS:
+            if len(word) <= 2 or not letters <= ASCII_LETTERS or word in exclude:
                 continue
             DICTIONARY[word] = len(letters)
 
@@ -87,11 +90,20 @@ def main(argv):
     optparser = OptionParser(__doc__)
     optparser.add_option("--debug", default=False, action='store_true',
                          help="show me the SchoonerSpores[tm]")
+    optparser.add_option("--exclude-dictionary", default='',
+                         help="comma-seperated list of words that will not be "
+                              "considered to be dictionary words")
+    optparser.add_option("--discourage-picking", default='',
+                         help="comma-seperated list of words that will be "
+                              "not be picked easily from sentences")
     (options, args) = optparser.parse_args(argv[1:])
 
     filenames = args
 
-    load_dictionary()
+    load_dictionary(options.exclude_dictionary.split(','))
+    discourage_picking = set(
+        [w.upper() for w in options.discourage_picking.split(',')]
+    )
 
     words = []
 
@@ -139,6 +151,11 @@ def main(argv):
                 if word1 == word2:
                     continue
                 if (not valid_word(word1)) or (not valid_word(word2)):
+                    continue
+                # FIXME: this is a little too discouraging
+                if word1.upper() in discourage_picking:
+                    continue
+                if word2.upper() in discourage_picking:
                     continue
 
                 (cons1, base1) = strip_initial_consonants(word1)
