@@ -45,13 +45,15 @@ def supercapitalize(word):
 
 
 def clean(word):
-    if word.endswith(('.', '!', '?', ';', ',')):
+    if word.endswith('--'):
+        word = word[:-2]
+    if word.endswith(('.', '!', '?', ';', ':', ',')):
         word = word[:-1]
     if word.startswith(('"', "'", '(')):
         word = word[1:]
     if word.endswith(('"', "'", ')')):
         word = word[:-1]
-    if word.endswith(('.', '!', '?', ';', ',')):
+    if word.endswith(('.', '!', '?', ';', ':', ',')):
         word = word[:-1]
     return word.upper()
 
@@ -71,7 +73,7 @@ def load_dictionary(exclude):
             DICTIONARY[word] = len(letters)
 
 
-def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
+def calculate_schooner_spore(cons1, word1, new1, pos1, cons2, word2, new2, pos2):
     """The SchoonerSpore[tm] is a tuple of
     (dictionary_score, promiximity_score, sentence_score)"""
 
@@ -84,6 +86,8 @@ def calculate_schooner_spore(cons1, new1, pos1, cons2, new2, pos2):
         len(cons2) * len(cons2) +
         len(new1) + len(new2) + len(set(new1) | set(new2))
     )
+    sentence_score -= (20 if len(word1) <= 2 else 0)
+    sentence_score -= (20 if len(word2) <= 2 else 0)
 
     return (dict_score, promiximity_score, sentence_score)
 
@@ -163,11 +167,6 @@ def main(argv):
 
     sentences.append(sentence)
 
-    def valid_word(w):
-        if len(clean(w)) > 2:
-            return True
-        return False
-
     for sentence in sentences:
         if sentence is PARAGRAPH_BREAK:
             sys.stdout.write('\n\n')
@@ -175,13 +174,13 @@ def main(argv):
         scores = {}  # frozenset of two (word, pos) tuples -> score
         for (pos1, word1) in enumerate(sentence):
             for (pos2, word2) in enumerate(sentence):
-                if word1 == word2:
+                clean_word1 = clean(word1)
+                clean_word2 = clean(word2)
+                if clean_word1 == clean_word2:
                     continue
-                if (not valid_word(word1)) or (not valid_word(word2)):
+                if len(clean_word1) < 2 or len(clean_word2) < 2:
                     continue
-                if word1.upper() in disable_picking:
-                    continue
-                if word2.upper() in disable_picking:
+                if clean_word1 in disable_picking or clean_word2 in disable_picking:
                     continue
 
                 (pre1, cons1, base1) = strip_initial_consonants(word1)
@@ -197,7 +196,8 @@ def main(argv):
                 pair = frozenset([(word1, new1, pos1), (word2, new2, pos2)])
 
                 scores[pair] = calculate_schooner_spore(
-                    cons1, new1, pos1, cons2, new2, pos2
+                    cons1, word1, new1, pos1,
+                    cons2, word2, new2, pos2
                 )
 
         if options.debug:
