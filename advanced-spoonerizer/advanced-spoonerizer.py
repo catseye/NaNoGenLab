@@ -93,16 +93,16 @@ def main(argv):
     optparser.add_option("--exclude-dictionary", default='',
                          help="comma-seperated list of words that will not be "
                               "considered to be dictionary words")
-    optparser.add_option("--discourage-picking", default='',
+    optparser.add_option("--disable-picking", default='',
                          help="comma-seperated list of words that will be "
-                              "not be picked easily from sentences")
+                              "not be picked from sentences")
     (options, args) = optparser.parse_args(argv[1:])
 
     filenames = args
 
     load_dictionary(options.exclude_dictionary.split(','))
-    discourage_picking = set(
-        [w.upper() for w in options.discourage_picking.split(',')]
+    disable_picking = set(
+        [w.upper() for w in options.disable_picking.split(',')]
     )
 
     words = []
@@ -152,10 +152,9 @@ def main(argv):
                     continue
                 if (not valid_word(word1)) or (not valid_word(word2)):
                     continue
-                # FIXME: this is a little too discouraging
-                if word1.upper() in discourage_picking:
+                if word1.upper() in disable_picking:
                     continue
-                if word2.upper() in discourage_picking:
+                if word2.upper() in disable_picking:
                     continue
 
                 (cons1, base1) = strip_initial_consonants(word1)
