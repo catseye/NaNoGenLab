@@ -15,14 +15,18 @@ VOWELS = 'aeiouyAEIOUY'
 
 
 def strip_initial_consonants(word):
+    pre = ''
     init = ''
-    if word[0] in 'yY':
+    while word and word[0] in '"':
+        pre += word[0]
+        word = word[1:]
+    if word and word[0] in 'yY':
         init += word[0]
         word = word[1:]
     while word and word[0].isalpha() and word[0] not in VOWELS:
         init += word[0]
         word = word[1:]
-    return (init, word)
+    return (pre, init, word)
 
 
 DICTIONARY = {}
@@ -96,6 +100,8 @@ def main(argv):
     optparser.add_option("--disable-picking", default='',
                          help="comma-seperated list of words that will be "
                               "not be picked from sentences")
+    optparser.add_option("--remove-quotes", default=False, action='store_true',
+                         help="strip double quotes from input words")
     (options, args) = optparser.parse_args(argv[1:])
 
     filenames = args
@@ -124,10 +130,11 @@ def main(argv):
                 sentence = []
             sentences.append(PARAGRAPH_BREAK)
             continue
-        if word.startswith(('"', "'")):
-            word = word[1:]
-        if word.endswith(('"', "'")):
-            word = word[:-1]
+        if options.remove_quotes:
+            if word.startswith(('"', "'")):
+                word = word[1:]
+            if word.endswith(('"', "'")):
+                word = word[:-1]
         sentence.append(word)
         if (word not in ('Mr.', 'Mrs.', 'Dr.') and
             word.endswith(('.', '!', '?', ';', ':', ',', '--'))):
@@ -137,7 +144,7 @@ def main(argv):
     sentences.append(sentence)
 
     def valid_word(w):
-        if len(clean(w)) > 2 and w[0].isalpha():
+        if len(clean(w)) > 2:
             return True
         return False
 
@@ -157,15 +164,15 @@ def main(argv):
                 if word2.upper() in disable_picking:
                     continue
 
-                (cons1, base1) = strip_initial_consonants(word1)
-                (cons2, base2) = strip_initial_consonants(word2)
+                (pre1, cons1, base1) = strip_initial_consonants(word1)
+                (pre2, cons2, base2) = strip_initial_consonants(word2)
                 if len(cons1) == 0 and len(cons2) == 0:
                     continue
                 if cons1.upper() == cons2.upper():
                     continue
 
-                new1 = cons2 + base1
-                new2 = cons1 + base2
+                new1 = pre1 + cons2 + base1
+                new2 = pre2 + cons1 + base2
 
                 pair = frozenset([(word1, new1, pos1), (word2, new2, pos2)])
 

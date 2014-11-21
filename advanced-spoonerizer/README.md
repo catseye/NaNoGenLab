@@ -65,5 +65,3 @@ Future work
 -----------
 
 Add option to prevent swapping, e.g., "that" and "what".
-
-Retain quote marks.
