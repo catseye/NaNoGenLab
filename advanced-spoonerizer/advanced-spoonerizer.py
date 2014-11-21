@@ -79,11 +79,18 @@ def load_dictionary(exclude):
             DICTIONARY[word] = len(letters)
 
 
-def calculate_schooner_spore(cons1, word1, new1, pos1, cons2, word2, new2, pos2):
+AWFUL_SCORE = (-1000, -1000, -1000)
+
+
+def calculate_schooner_spore(cons1, word1, new1, pos1,
+                             cons2, word2, new2, pos2,
+                             dictionary_words_only=False):
     """The SchoonerSpore[tm] is a tuple of
     (dictionary_score, promiximity_score, sentence_score)"""
 
     dict_score = dictionary_score(new1) + dictionary_score(new2)
+    if dictionary_words_only and dict_score != 2:
+        return AWFUL_SCORE
 
     promiximity_score = 0 - (pos1 - pos2) ** 2
 
@@ -94,8 +101,6 @@ def calculate_schooner_spore(cons1, word1, new1, pos1, cons2, word2, new2, pos2)
     )
 
     return (dict_score, promiximity_score, sentence_score)
-
-AWFUL_SCORE = (-1000, -1000, -1000)
 
 
 def adjust_case(new, orig):
@@ -116,11 +121,19 @@ def main(argv):
     optparser.add_option("--debug", default=False, action='store_true',
                          help="show me the SchoonerSpores[tm]")
     optparser.add_option("--exclude-dictionary", default='',
-                         help="comma-seperated list of words that will not be "
+                         help="comma-separated list of words that will not be "
                               "considered to be dictionary words")
     optparser.add_option("--disable-picking", default='',
-                         help="comma-seperated list of words that will be "
+                         help="comma-separated list of words that will be "
                               "not be picked from sentences")
+    optparser.add_option("--disable-swapping", default='',
+                         help="comma-separated list of colon-separated "
+                              "pairs of words that will be "
+                              "not be considered for swapping")
+    optparser.add_option("--dictionary-words-only", default=False,
+                         action='store_true',
+                         help="only swap words when both words are "
+                              "dictionary words")
     optparser.add_option("--remove-quotes", default=False, action='store_true',
                          help="strip double quotes from input words")
     (options, args) = optparser.parse_args(argv[1:])
@@ -128,9 +141,13 @@ def main(argv):
     filenames = args
 
     load_dictionary(options.exclude_dictionary.split(','))
-    disable_picking = set(
-        [w.upper() for w in options.disable_picking.split(',')]
-    )
+    disable_picking = set([
+        w.upper() for w in options.disable_picking.split(',')
+    ])
+    disable_swapping = set([
+        frozenset([z.upper for z in x.split(':')])
+          for x in options.disable_swapping.split(',')
+    ])
 
     words = []
 
@@ -187,6 +204,9 @@ def main(argv):
                 if clean_word1 in disable_picking or clean_word2 in disable_picking:
                     continue
 
+                if frozenset([clean_word1, clean_word2]) in disable_swapping:
+                    continue
+
                 (pre1, cons1, base1) = strip_initial_consonants(word1)
                 (pre2, cons2, base2) = strip_initial_consonants(word2)
                 if len(cons1) == 0 and len(cons2) == 0:
@@ -201,7 +221,8 @@ def main(argv):
 
                 scores[pair] = calculate_schooner_spore(
                     cons1, word1, new1, pos1,
-                    cons2, word2, new2, pos2
+                    cons2, word2, new2, pos2,
+                    dictionary_words_only=options.dictionary_words_only
                 )
 
         if options.debug:
@@ -220,7 +241,7 @@ def main(argv):
                 best_score = score
                 best_pair = pair
 
-        if best_pair is None:
+        if best_pair is None or best_score == AWFUL_SCORE:
             sys.stdout.write(sentencify(sentence))
         else:
             best_pair = list(best_pair)

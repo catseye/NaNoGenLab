@@ -49,4 +49,4 @@ scoring one isn't always the "best", but it's often hard to say why the
 Future work
 -----------
 
-Add option to prevent swapping, e.g., "that" and "what", "ever" and "never".
+Add a test suite?
