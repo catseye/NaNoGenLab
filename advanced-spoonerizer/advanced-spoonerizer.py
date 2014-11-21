@@ -17,7 +17,7 @@ VOWELS = 'aeiouyAEIOUY'
 def strip_initial_consonants(word):
     pre = ''
     init = ''
-    while word and word[0] in '"':
+    while word and word[0] in ('"' + "'"):
         pre += word[0]
         word = word[1:]
     if word and word[0] in 'yY':
@@ -83,6 +83,8 @@ AWFUL_SCORE = (-1000, -1000, -1000)
 
 
 def adjust_case(new, orig):
+    while orig and orig[0] in ('"' + "'"):
+        orig = orig[1:]
     if all([x.isupper() for x in orig if x.isalpha()]):
         return new.upper()
     if orig[0].isupper():
@@ -124,7 +126,14 @@ def main(argv):
                 if line == '' and words[-1] is not PARAGRAPH_BREAK:
                     words.append(PARAGRAPH_BREAK)
 
-    sentences = []
+    BASE_CLAUSE_ENDERS = ['.', '!', '?', ';', ':', ',', '--']
+    CLAUSE_ENDERS = tuple(
+        BASE_CLAUSE_ENDERS +
+        [c + '"' for c in BASE_CLAUSE_ENDERS] +
+        [c + "'" for c in BASE_CLAUSE_ENDERS]
+    )
+    
+    sentences = []  # actually clauses. :/
     sentence = []
     for word in words:
         if word is PARAGRAPH_BREAK:
@@ -140,7 +149,7 @@ def main(argv):
                 word = word[:-1]
         sentence.append(word)
         if (word not in ('Mr.', 'Mrs.', 'Dr.') and
-            word.endswith(('.', '!', '?', ';', ':', ',', '--'))):
+            word.endswith(CLAUSE_ENDERS)):
             sentences.append(sentence)
             sentence = []
 
