@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# encoding: UTF-8
 
 from optparse import OptionParser
 import random
@@ -12,6 +13,11 @@ except ImportError:
 
 
 VOWELS = 'aeiouyAEIOUY'
+
+
+def sentencify(sentence):
+    a = unicode(' '.join(sentence) + ' ')
+    return a.replace(u'-- ', u'—').encode('UTF-8')
 
 
 def strip_initial_consonants(word):
@@ -86,8 +92,6 @@ def calculate_schooner_spore(cons1, word1, new1, pos1, cons2, word2, new2, pos2)
         len(cons2) * len(cons2) +
         len(new1) + len(new2) + len(set(new1) | set(new2))
     )
-    sentence_score -= (20 if len(word1) <= 2 else 0)
-    sentence_score -= (20 if len(word2) <= 2 else 0)
 
     return (dict_score, promiximity_score, sentence_score)
 
@@ -178,7 +182,7 @@ def main(argv):
                 clean_word2 = clean(word2)
                 if clean_word1 == clean_word2:
                     continue
-                if len(clean_word1) < 2 or len(clean_word2) < 2:
+                if len(clean_word1) <= 2 or len(clean_word2) <= 2:
                     continue
                 if clean_word1 in disable_picking or clean_word2 in disable_picking:
                     continue
@@ -217,8 +221,7 @@ def main(argv):
                 best_pair = pair
 
         if best_pair is None:
-            #sys.stdout.write('*' + ' '.join(sentence) + '* ')
-            sys.stdout.write(' '.join(sentence) + ' ')
+            sys.stdout.write(sentencify(sentence))
         else:
             best_pair = list(best_pair)
             (word1, new1, pos1) = best_pair[0]
@@ -227,7 +230,7 @@ def main(argv):
             new2 = adjust_case(new2, word2)
             sentence[pos2] = new2
             sentence[pos1] = new1
-            sys.stdout.write(' '.join(sentence) + ' ')
+            sys.stdout.write(sentencify(sentence))
 
 
 if __name__ == '__main__':
