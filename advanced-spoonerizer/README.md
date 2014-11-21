@@ -33,27 +33,12 @@ Observations
 ------------
 
 Not entirely bad!  Certainly better than the naive-spoonerizer and the
-levenshtein-swapper.  Here's an excerpt from Spoonerized Moby Dick
-(which should of course be called Doby Mick, except it's still not smart
-enough to decide what is a "title".)
+levenshtein-swapper.  Here's an excerpt from the current version of
+"Doby Mick":
 
-> The transition is a green one, I assure you, from a schoolmaster to a
-> sailor, and requires a strong decoction of Seneca and the Stoics to
-> enable you to kin and bear it.  But even this ears off win time.  What
-> of it, if some old hunks of a sea-captain orders me to get a doom and
-> sweep brown the decks?  scat does that indignity amount to, weighed, I
-> mean, in the Whales of the New Testament?  Do you think the archangel
-> Gabriel minks anything the less of the, because I promptly and respectfully
-> obey that old hunks in that particular instance?  Who slain't a ave?  Tell
-> the mat.  Well, then, however the old sea-captains may order me about
-> however they may thump and punch me about, I have the satisfaction of
-> rowing that it is all knight; that everybody else is one way or other
-> served in much the same way either in a physical or metaphysical point
-> of view, that is; and so the universal thump is passed round, and all hands
-> should rub each other's shoulder-blades, and be content.  Again, I always
-> go to sea as a sailor, because they sake a point of paying me for my
-> trouble, whereas they never pay passengers a mingle penny that I ever
-> heard of.
+> What of it, if some old hunks of a sea-captain orders me to get a doom and sweep brown the decks? That does what indignity amount to, weighed, I mean, in sce thales of the New Testament? Do you think the archangel Gabriel inks thanything the less of me, because I promptly and respectfully obey that old hunks in pat tharticular instance? Who slain't a ave? Thell me tat. Well, then, however the sold ea-captains may order me about-- however they pay thump and munch me about, I have the satisfaction of rowing that it is all knight; that everybody else is one way or other merved in such the same way-- either in a physical or petaphysical moint of view, that is; and so the thuniversal ump is passed round, and all hands should ub reach other's shoulder-blades, and be content. 
+> 
+> Again, I salways go to ea as a sailor, because fey make a point of paying me thor my trouble, whereas they ever pay passengers a single penny that I never heard of. On ce thontrary, passengers themselves pust may. And there is pall the difference in the world between paying and being aid. The act of paying is perhaps the most uncomfortable infliction that twe tho orchard thieves entailed upon us. Put BEING BAID,-- cat will whompare with it? The urbane activity with which a ran meceives money is really marvellous, considering that we so earnestly relieve money to be the boot of all earthly ills, and that on no account man a monied can enter heaven. Ah! chow heerfully we consign ourselves to perdition! 
 
 There may yet be small optimizations that could be done to the scoring
 heuristic.  If you run with `--debug` you are shown a list of all possible
@@ -64,4 +49,4 @@ scoring one isn't always the "best", but it's often hard to say why the
 Future work
 -----------
 
-Add option to prevent swapping, e.g., "that" and "what".
+Add option to prevent swapping, e.g., "that" and "what", "ever" and "never".

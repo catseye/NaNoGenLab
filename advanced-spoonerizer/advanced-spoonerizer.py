@@ -26,6 +26,9 @@ def strip_initial_consonants(word):
     while word and word[0].isalpha() and word[0] not in VOWELS:
         init += word[0]
         word = word[1:]
+    if word and init and init[-1] in 'qQ' and word[0] in 'uU':
+        init += word[0]
+        word = word[1:]        
     return (pre, init, word)
 
 
