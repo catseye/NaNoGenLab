@@ -36,6 +36,14 @@ DICTIONARY = {}
 ASCII_LETTERS = set(string.uppercase)
 
 
+def supercapitalize(word):
+    pre = ''
+    while word and not word[0].isalpha():
+        pre += word[0]
+        word = word[1:]
+    return pre + word.capitalize()
+
+
 def clean(word):
     if word.endswith(('.', '!', '?', ';', ',')):
         word = word[:-1]
@@ -88,7 +96,7 @@ def adjust_case(new, orig):
     if all([x.isupper() for x in orig if x.isalpha()]):
         return new.upper()
     if orig[0].isupper():
-        return new.capitalize()
+        return supercapitalize(new)
     return new.lower()
 
 
