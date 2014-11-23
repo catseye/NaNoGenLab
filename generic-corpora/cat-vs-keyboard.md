@@ -42,3 +42,19 @@ Nov 16
 Somehow she started Gnumeric (after starting two instances of Pidgin) and put this gem in cell A1:
 
     bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        uuuuuuuuuuuuuuuuuuuuuuuuujjjjjjjjjjjjjyyyyyyyyyyyyyyyyvcrrrrrxxxxxxxxxxcccccccccccccC54    ggggggggggggggggggbvvvvvvvvvvvvvvvvhhhhhhhhhhhhhhhhhhhhhhb                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          4444$$$$$$$$$^  
+
+Nov 23
+------
+
+In one of the many terminal windows she opened, two tabs; one,
+
+    GFFFFFFFFFF
+
+the other,
+
+    NB
+
+Later on,
+
+    5rtttttttc                                                                        
+
