@@ -61,7 +61,7 @@ they were finished), the experiments have been:
 27. sensible-paste-up*
 28. joke-o-matic
 29. levenshtein-swapper
-30. advanced-spoonerizer*
+30. advanced-spoonerizer
 
 A * indicates that they could still use a bit of work before I'm entirely
 happy with them.
