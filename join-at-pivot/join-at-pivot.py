@@ -4,8 +4,6 @@ import random
 import re
 import sys
 
-from gutenberg import GutenbergCleaner
-
 try:
     from tqdm import tqdm
 except ImportError:
@@ -26,10 +24,8 @@ def main(argv):
     words = []
 
     for filename in tqdm(filenames):
-        with open(filename, 'r') as f:
-            c = GutenbergCleaner(f)
-            lines = c.extract_text().split('\n')
-            for line in lines:
+        with open(filename, 'r') as fh:
+            for line in fh:
                 bits = line.split()
                 for bit in bits:
                     words.extend(bit.split('--'))

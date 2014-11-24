@@ -1,15 +1,11 @@
 #!/usr/bin/env python
 
 from optparse import OptionParser
+import os
 import random
 import re
 import string
-
-try:
-    from tqdm import tqdm
-except ImportError:
-    def tqdm(x):
-        return x
+import sys
 
 
 class SentinelCleaner(object):
@@ -54,14 +50,24 @@ def main(argv):
     optparser = OptionParser(__doc__)
     optparser.add_option("--pre", default=None,
                          help="text to add to beginning of input document")
+    optparser.add_option("--output-dir", default=None,
+                         help="if given, save result to this dir instead of "
+                              "dumping it to standard output")
     (options, args) = optparser.parse_args(argv[1:])
 
     for filename in args:
+        out = sys.stdout
+        if options.output_dir is not None:
+            out_filename = os.path.join(
+                options.output_dir, os.path.basename(filename)
+            )
+            out = open(out_filename, 'w')
         with open(filename, 'r') as f:
             for line in SentinelCleaner(f, pre=options.pre).lines():
-                print line
+                out.write(line + '\n')
+        if out is not sys.stdout:
+            out.close()
 
 
 if __name__ == '__main__':
-    import sys
     main(sys.argv)
