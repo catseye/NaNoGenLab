@@ -30,8 +30,23 @@ Usage
 Future work
 -----------
 
-I'm sure there are Gutenberg texts for which this fails.  Whence these are
-found, this script's regular expressions should be adapted to match those
+Some texts on which this currently fails are:
+
+*   Princess of Mars (no "produced" line)
+*   Around the world in 80 days
+
+I think what we should so is make the "base" cleaner more conservative and
+have it stop stripping at the "start of project gutenberg" line.  Then add a
+number of "extra" cleaners, which attempt to strip only a certain thing out
+of the text, e.g. the "produced" line.  If a cleaner results in no lines, it
+should fail (and you can use the output of the previous, more conservative
+cleaner, as a fallback.)  Of course this failure-check means it needs to take
+the "broad" approach, i.e. it's not really a good iterator anymore; it has
+to read the entire file to see if it failed or not.  In practice this should
+not be a problem.
+
+I'm sure there are other Gutenberg texts for which this fails.  Whence these
+are found, this script's regular expressions should be adapted to match those
 lines.
 
 Really, the experiments in this repository should *not* be relying themselves

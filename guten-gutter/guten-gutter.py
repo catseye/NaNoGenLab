@@ -13,7 +13,7 @@ class SentinelCleaner(object):
     sentinel (exclusive) and the end sentinel (exclusive.)"""
 
     def __init__(self, fh,
-                 start_re='^(E\-?TEXT\s+)?(PRODUCED\s+BY|PREPARED\s+BY).*?$',
+                 start_re='^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$',
                  end_re=r'^\**\s*END\s+OF\s+(THE\s+)?PROJECT\s+GUTENBERG.*?$',
                  pre=None):
         self.fh = fh
