@@ -4,8 +4,6 @@ import random
 import re
 import sys
 
-from gutenberg import GutenbergCleaner
-
 
 def main(argv):
     filenames = argv[1:]
@@ -15,10 +13,8 @@ def main(argv):
 
     for filename in filenames:
         with open(filename, 'r') as f:
-            c = GutenbergCleaner(f)
-            lines = c.extract_text().split('\n')
+            lines = [l.strip() for l in f]
             stripped = [l.strip() for l in lines if len(l.strip()) >= 40]
-            #print filename, len(stripped)
             texts.append(stripped)
             if len(stripped) < min_len:
                 min_len = len(stripped)

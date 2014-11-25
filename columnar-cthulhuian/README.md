@@ -10,8 +10,8 @@ Apparatus
 ---------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
-*   3 input texts (possibly from Project Gutenberg)
+*   3 input texts, possibly text files previously downloaded from
+    Project Gutenberg
 
 Method
 ------
@@ -63,3 +63,10 @@ of Scientific Managment_, and _The Rivet in Grandfather's Neck_:
     Ihat d  esehtodednneettc  mlgyy wrnp m mhoisd o oddseeaa. lTllsotstoog
     tica "s haesaudrr"nieSwomld esnpoteltaghd"gh.s Aar  e vet  amsrtbtt e  
     mr bno  ltgt  yt lolb a nbwentri  tiraet ara ineegdaau m.   tnenw hhyeh 
+
+In the above, the texts were pre-cleaned by gutenizer, which leaves in the
+"Produced by" lines, which accounts for the almost-sensibility of the start
+of the first line.  Cleaning them with [guten-gutter](../guten-gutter) would
+eliminate that.  Alternatively, not cleaning them at all would retain the
+Gutenberg license (assuming that it is the same on all the texts) for a
+different effect.
