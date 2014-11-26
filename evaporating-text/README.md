@@ -10,8 +10,8 @@ Apparatus
 ---------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
-*   An input text (possibly from Project Gutenberg)
+*   An input text — possibly a [pre-cleaned](../guten-gutter) text file
+    previously downloaded from Project Gutenberg
 
 Method
 ------
