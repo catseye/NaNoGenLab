@@ -11,8 +11,8 @@ Apparatus
 
 *   Python 2.7.6 (probably works with older versions too)
 *   [py-editdist](http://www.mindrot.org/projects/py-editdist/)
-*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
-*   Two novels from Gutenberg probably
+*   Two texts, possibly [pre-cleaned](../guten-gutter) text files
+    previously downloaded from Project Gutenberg
 
 Method
 ------
