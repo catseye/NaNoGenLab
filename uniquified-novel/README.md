@@ -11,8 +11,8 @@ Apparatus
 ---------
 
 *   Python 2.7.6 (probably works with older versions too)
-*   The `gutenberg.py` module from [gutenizer](https://github.com/okfn/gutenizer/)
-*   A bunch of Project Gutenberg texts in plain text format
+*   A bunch of texts, possibly [pre-cleaned](../guten-gutter) text files
+    previously downloaded from Project Gutenberg
 
 Method
 ------
@@ -51,3 +51,8 @@ Future work
 -----------
 
 Maybe clean the words of punctuation too.
+
+Make it work backwards -- only output a word if it does not occur further
+on in the text.  (Reverse words, uniquify, reverse again.)
+
+Write a version in Javascript so that it can be used in someone's web browser.
