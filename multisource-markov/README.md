@@ -63,3 +63,50 @@ be telegraphed so much.  But you could do that with a plain ol' Markov chain.
 > *now,* *presently,* *i* *did* *be* *not* *to* *teach* *her* *wishing;* *for,* *behold,* *i* *had* *the* *gorge,* d'une victoire devait paraître à vouloir reconduire. 
 > 
 > mais sur les lignes d'avant-garde s'éclipsèrent, et rapace. 
+
+So, we may ask, if this is actually not all that suitable for disconcerting
+jumps between corpora, what happens if we run it on two texts that have
+a fairly similar style, with a large number of words in common?  Well, here
+it is running on "The Book of Cheese" and "The Principles of Scientific
+Management":
+
+> setting temperature of variations in the preparation of dairy equipment for roquefort cheese, the direction *of* handling *rice* *coal,* *with* resultant texture varying amounts of starter is commonly in relation of these are *possible* *under* *the* manufacturing process. 
+> 
+> it comes from whole milk is filled to raise the making *each* *man* *engaged* *in* warm sweet milk. 
+> 
+> the curdling temperature of the amido acids was *carefully* *selected* from kosher cheese, stirring to *be* evenly in furnishing protein 26-30 per cent with *full* *measure* *the* *principal* substance designed *and* the cheddaring process from each *of* the ground level and m. 
+> 
+> j., 39. 
+> 
+> bang's theory.+--another description of hungarian briuse which is ready for *which* *each* pound of these *good* delivery. 
+> 
+> this allows the *maximum* | | 8.54 | | .72 | {1.2 | | cheese by this *way* *to* 70 per *cent* moisture test, 26. 
+> 
+> ferments, 15, pages 130-146, 1909. 
+> 
+> this *type.* 
+> 
+> *the* cheese. 
+> 
+> it is no commercial rennet will be optional with salt is *widely* in order to other the *highest* *grade* *receive* *for* *handling* *of* cheddar process the *shovel* *to* be accurate. 
+> 
+> the alkali required *the* *hours* at *the* flavor and *is* difficult *to* which *it* has mechanical *engineers,* *by* rubbing the *machine-shop* *work* *than* the outer surface. 
+> 
+> there *is,* *how* *it* is *impossible,* *through* *any* *way* *of* the *rate* *of* the *minutest* *way* *maximum* | 6.5 | ash or compounds of ripening the milk. 
+> 
+> this *organization* with the amount of heating to be done by 8 the *case* *the* curd is constantly *watched* by *them* *in* cheese-making. 
+> 
+> they *could* *do* *the* end of *thumb.* 
+
+If if you do it on two different collections of Wodehouse short stories,
+the highlight seems almost random.  Perhaps unsurprisingly.
+
+> *and* *the* *semi-darkness* *you* like it, said *awkwardly;* *but* you had *been* *hoped* to explain at roville possesses two *weeks* *peter* *you* do i am dependent. 
+> 
+> i *was* *silence* of the tears *dried,* *and* *drove* an idea which we artists, monsieur, i *don't* *stop.* 
+> 
+> *she* *had* *been* standing *looking* after *that* *deep* waters *with* *the* very *large* blue eyes *glowed* *in* *algiers?* 
+> 
+> *benyon* *sat* and *the* *days* ago _the island who cannot meet *even* *the* sudden *stiffening* *of* *luck* *i* met *at* *that.* 
+> 
+> forty francs will prove of the *bushes* *that* he *were* getting it *all,* she *groped* *my* lap and *shouted* mr *meggs* *at* all. 
