@@ -59,3 +59,16 @@ Version 2, running on "The Rivet in Grandfather's Neck":
 Version 2, running on a whole bunch of texts:
 
 > cruelly upon the point of hurling himself upon me for awhile only just recalled his existence imagine that even without visiting the shops to inquire into the mockery of a tramp steamer which had stolen the slipper of the stolen slipper from its streets leaving all present and as he gazed proudly at it there were no more than a yard of us set to music and singing got on a lawn and they had done a rifle cracked to his feet as i was come to you not mention having noticed when he had left the verandah to take me to
+
+Addendum
+--------
+
+Note that, because the experiment was something of a "race against the clock",
+I'm going to leave the source code just as it was when I finished writing it,
+on the train.  There are things that, ordinarily, I'd clean up — and ordinarily
+I'd make it take a plain text file as input instead of having a dependency
+on gutenizer.  It should be easy enough to modify to remove that dependency
+if you're so inclined.  Or, see [multisource-markov](../multisource-markov)
+for what is basically a cleaned-up version of this which also tracks which
+input text each word was found in.
+
