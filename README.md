@@ -58,7 +58,7 @@ they were finished), the experiments have been:
 24. quick-and-dirty-markov
 25. wordplay-finder
 26. levenshtein-word-replacement
-27. sensible-paste-up*
+27. sensible-paste-up
 28. joke-o-matic
 29. levenshtein-swapper
 30. advanced-spoonerizer

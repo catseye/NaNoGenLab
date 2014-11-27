@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import math
 from optparse import OptionParser
 import os
 import random
@@ -51,8 +52,12 @@ def main(argv):
         desired_point = (base_width / 2, base_height / 2)
         for trial in xrange(0, 100):
             score = 0
-            paste_point = (random.randint(0, base_width - image.size[0]),
-                           random.randint(0, base_height - image.size[1]))
+            try:
+                paste_point = (random.randint(0, base_width - image.size[0]),
+                               random.randint(0, base_height - image.size[1]))
+            except ValueError:
+                print "uh-oh, won't fit?"
+                continue
 
             lum = get_luminance(canvas, (
                 paste_point[0], paste_point[1],
@@ -74,7 +79,10 @@ def main(argv):
                 print "improved score", best_score
 
         print "best score:", best_score, best_place
-        canvas.paste(image, best_place)
+        if best_place is None:
+            print "Could not find good place to paste!"
+        else:
+            canvas.paste(image, best_place)
 
     canvas.save("output.png")
 

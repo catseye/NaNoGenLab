@@ -1,8 +1,6 @@
 sensible-paste-up
 =================
 
-_Definitely not finished yet_
-
 Hypothesis
 ----------
 
@@ -32,3 +30,16 @@ Method
 
 Observations
 ------------
+
+A bit disappointing, but then, this is a bit ambitious.  Could use more
+than the split-attention few days I've been working on it, to get better
+results.
+
+The idea is to use bits that have been cut up with [find-cut-up-regions](../find-cut-up-regions).
+The problem (if this is a problem) is that we either don't cover the
+canvas, leaving areas full-white and ugly, or we run out of space, and
+have wasted snippets.
+
+But it's not terrible:
+
+![Newspaper cut-up on the theme of cheese](sample-cheese.jpg)
