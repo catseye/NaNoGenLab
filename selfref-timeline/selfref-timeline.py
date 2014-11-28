@@ -1,7 +1,51 @@
 #!/usr/bin/env python
 
+from optparse import OptionParser
 import random
 import sys
+
+
+OPTIONS = None
+SIGHTINGS = 0
+
+NOUN_PHRASES = (
+    'UFO', 'bigfoot', 'ghost', 'black helicopter', 'chupacabra',
+    'Yeti', 'Loch Ness monster', 'Flying Dutchman', 'vampire',
+    'pixie', 'zombie', 'Chinese dragon', 'Grey', 'Nicolas Flamel',
+)
+
+VERB_PHRASES = (
+    'on vacation',
+    'chewing bubblegum',
+    'in the queue at the bank',
+    'just sitting there',
+    'cheating at cards',
+    'ranting obnoxiously',
+    'trimming its nails',
+    'looking pensive',
+    'hovering overhead',
+    'swooping down from the treetops',
+    'fishing for compliments',
+    'breakdancing',
+    'eating a burrito',
+    'underneath the bridge',
+    'at the mall',
+    'getting on a bus',
+    'complaining at the post office',
+)
+
+def all_possible_sightings():
+    s = []
+    for np in NOUN_PHRASES:
+        if not np.startswith(('Nico')):
+            np = 'a ' + np
+        for vp in VERB_PHRASES:
+            s.append(np + ' ' + vp)
+    random.shuffle(s)
+    return s
+
+
+POSSIBLE_SIGHTINGS = all_possible_sightings()
 
 
 class Event(object):
@@ -10,19 +54,9 @@ class Event(object):
 
 class Sighting(Event):
     def __init__(self):
-        self.sight = random.choice(
-            ('UFO', 'bigfoot', 'ghost', 'black helicopter', 'chupacabra',
-             'Yeti', 'Loch Ness monster')
-        ) + ' ' + random.choice(
-            ('on vacation',
-             'just sitting there',
-             'cheating at cards',
-             'ranting obnoxiously',
-             'trimming its nails',
-             'looking pensive',
-             'hovering overhead',
-            )
-        )
+        global SIGHTINGS
+        SIGHTINGS += 1
+        self.sight = POSSIBLE_SIGHTINGS.pop()
 
 
 class ReferentialEvent(Event):
@@ -43,13 +77,15 @@ def render_toplevel(event):
     starting_at = event
     mentioned = set([starting_at])
 
-    (a, b) = random.choice((('Alice', 'Bob'), ('Bob', 'Alice')))
+    (a, b) = random.choice(
+        ((OPTIONS.alice, OPTIONS.bob), (OPTIONS.bob, OPTIONS.alice))
+    )
 
     if isinstance(event, Prediction):
         return (
             '%s turned to %s and asked, '
             '"%s, do you think that one day we will %s?"  '
-            '"I don\'t know, %s," said %s.' % (
+            '"Somehow, %s, I\'m sure we will," said %s.' % (
                 a, b, b,
                 render(event.target_event, starting_at, mentioned, tense='future'),
                 a, b
@@ -66,7 +102,7 @@ def render_toplevel(event):
             )
         )
     elif isinstance(event, Sighting):
-        return 'Alice and Bob saw a %s.' % event.sight
+        return '%s and %s saw %s.' % (a, b, event.sight)
     else:
         raise NotImplementedError(event)
 
@@ -103,13 +139,20 @@ def render(event, starting_at, mentioned, tense='past'):
             )
         )
     elif isinstance(event, Sighting):
-        return "%s a %s" % (see, event.sight)
+        return "%s %s" % (see, event.sight)
     else:
         raise NotImplementedError(event)
 
 
 def main(argv):
-    length = int(argv[1])
+    global OPTIONS
+    optparser = OptionParser(__doc__)
+    optparser.add_option("--alice", default='Alice')
+    optparser.add_option("--bob", default='Bob')
+    (options, args) = optparser.parse_args(argv[1:])
+    OPTIONS = options
+
+    length = int(args[0])
 
     possibilities = (
         Prediction, Prediction, Memory, Memory, Sighting
@@ -151,6 +194,7 @@ def main(argv):
         sys.stdout.write(x)
         sys.stdout.write('\n\n')
 
+    #sys.stderr.write('%s sightings\n\n' % SIGHTINGS)
 
 if __name__ == '__main__':
     import sys
