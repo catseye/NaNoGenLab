@@ -9,9 +9,10 @@ OPTIONS = None
 SIGHTINGS = 0
 
 NOUN_PHRASES = (
-    'UFO', 'bigfoot', 'ghost', 'black helicopter', 'chupacabra',
-    'Yeti', 'Loch Ness monster', 'Flying Dutchman', 'vampire',
-    'pixie', 'zombie', 'Chinese dragon', 'Grey', 'Nicolas Flamel',
+    'a UFO', 'a bigfoot', 'a ghost', 'a black helicopter', 'a chupacabra',
+    'a Yeti', 'the Loch Ness monster', 'the Flying Dutchman', 'a vampire',
+    'a pixie', 'a zombie', 'a Chinese dragon', 'a Grey', 'Nicolas Flamel',
+    'a werefolf', 'the Bride of Frankenstein',
 )
 
 VERB_PHRASES = (
@@ -37,9 +38,11 @@ VERB_PHRASES = (
 def all_possible_sightings():
     s = []
     for np in NOUN_PHRASES:
-        if not np.startswith(('Nico')):
-            np = 'a ' + np
         for vp in VERB_PHRASES:
+            if np.startswith('Nico'):
+                vp = vp.replace(' its ', ' his ')
+            if np.startswith('The B'):
+                vp = vp.replace(' its ', ' her ')
             s.append(np + ' ' + vp)
     random.shuffle(s)
     return s
@@ -151,6 +154,9 @@ def main(argv):
     optparser.add_option("--bob", default='Bob')
     (options, args) = optparser.parse_args(argv[1:])
     OPTIONS = options
+
+    sys.stdout.write('Hope and Remembrance\n')
+    sys.stdout.write('====================\n\n')
 
     length = int(args[0])
 
