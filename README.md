@@ -63,18 +63,27 @@ they were finished), the experiments have been:
 29. levenshtein-swapper
 30. advanced-spoonerizer
 
-A * indicates that they could still use a bit of work before I'm entirely
-happy with them.
+Plus special bonus experiments!
 
-Anything not listed there is either a piece of lab equipment, a collection
-of materials, or just wasn't deemed to be experimental enough to be an
-experiment.  Some of these are:
+31. narrated-card-game
+32. multisource-markov
 
-* generic-corpora (materials)
-* fetch-chronam (lab equipment)
-* image-calipers (lab equipment)
+Plus experiments that were started but are not considered proper experiments
+mainly because they don't really add anything on top of one of the other
+experiments:
+
 * narrow-cut-up (not different enough from naive-cut-up)
 * naive-spoonerizer (not different enough from advanced-spoonerizer)
+
+Anything in this repo not listed above is either a piece of lab equipment:
+
+* fetch-chronam
+* guten-gutter
+* image-calipers
+
+or a supply of lab materials:
+
+* generic-corpora
 
 [NaNoGenMo 2014]:         https://github.com/dariusk/NaNoGenMo-2014
 [Cat's Eye Technologies]: http://catseye.tc/
