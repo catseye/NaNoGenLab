@@ -23,6 +23,23 @@ class AbstractBaseCleaner(object):
         """
         raise NotImplementedError
 
+    def has_failed(self, original_lines, result_lines, name=''):
+        """Given two iterables of lines, representing the input and the
+        result of running this cleaner on that input, return a boolean
+        indicating whether we think this cleaner has failed or not.
+        """
+        return False
+
+    def __str__(self):
+        return self.__class__.__name__
+
+
+class TrailingWhitespaceCleaner(AbstractBaseCleaner):
+
+    def clean(self, lines, name=''):
+        for line in lines:
+            yield line.rstrip()
+
 
 class SentinelCleaner(AbstractBaseCleaner):
     """Cleans the input lines, returning only the lines between the start
@@ -69,11 +86,26 @@ class GutenbergCleaner(SentinelCleaner):
     START_RE = r'^\**\s*START\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
     END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
 
+    def has_failed(self, original_lines, result_lines, name=''):
+        original_lines = list(original_lines)
+        result_lines = list(result_lines)
+        shrinkage = len(original_lines) - len(result_lines)
+        # usually under 400, but sometimes as high as 418...
+        return len(result_lines) == 0 or shrinkage > 450
+
 
 class ProducedByCleaner(SentinelCleaner):
     START_RE = (r'^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?'
                 '(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$')
     END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
+
+    def has_failed(self, original_lines, result_lines, name=''):
+        original_lines = list(original_lines)
+        result_lines = list(result_lines)
+        shrinkage = len(original_lines) - len(result_lines)
+        # Note: this is not sufficient by itself; assumes GutenbergCleaner
+        # got the trailing legal text, which is large.
+        return len(result_lines) == 0 or shrinkage > 20
 
 
 class MultiCleaner(AbstractBaseCleaner):
@@ -81,16 +113,15 @@ class MultiCleaner(AbstractBaseCleaner):
     If any cleaner fails, it returns the input just previous to that
     failure.
     """
-    def __init__(self, cleaners=None):
-        if cleaners is None:
-            cleaners = (GutenbergCleaner(), ProducedByCleaner())
+
+    def __init__(self, cleaners=()):
         self.cleaners = cleaners
 
     def clean(self, lines, name=''):
         lines = list(lines)
         for cleaner in self.cleaners:
             new_lines = list(cleaner.clean(lines, name=name))
-            if not new_lines:
+            if cleaner.has_failed(lines, new_lines, name=name):
                 sys.stderr.write("%s failed to clean '%s'\n" % (cleaner, name))
                 break
             lines = new_lines
@@ -114,7 +145,11 @@ def main(argv):
                 options.output_dir, os.path.basename(filename)
             )
             out = open(out_filename, 'w')
-        cleaner = MultiCleaner()
+        cleaner = MultiCleaner((
+            TrailingWhitespaceCleaner(),
+            GutenbergCleaner(),
+            ProducedByCleaner()
+        ))
         with open(filename, 'r') as f:
             for line in cleaner.clean(f, name=filename):
                 out.write(line + '\n')

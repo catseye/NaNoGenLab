@@ -15,7 +15,7 @@ downloaded from Project Gutenberg, but it's not perfect: it leaves the
 
 This tool attempts to be a more complete, more robust, and public domain
 replacement for it.  It is probably not as robust yet, but it works on at
-least some files. 
+least some files.
 
 Requirements
 ------------
@@ -37,8 +37,12 @@ between those two sentinels.  Then there are more specific cleaners, in
 particular one which looks for the "produced by" line (which varies greatly.)
 
 Then there is a cleaner which orchestrates a number of sub-cleaners.
-If a sub-cleaner results in no lines, this orchestrator considers that a
-failure, and uses the output of the previous successful cleaner as a fallback.
+If a sub-cleaner detects that it has failed (e.g. in the result, too many
+lines were deemed to be stripped,) the orchestrator uses the output of the
+previously successful cleaner as a fallback.
+
+So if the input file isn't a Gutenberg text at all, the output will be the
+original text file, whatever it was.
 
 The cleaners are implemented as iterators over input lines, but in practice,
 the orchestrator forces them to load all of the lines into memory; it needs
@@ -58,9 +62,8 @@ up after the fact.
 Future work
 -----------
 
-Some texts on which the guten-gutter currently fails are:
-
-*   Around the world in 80 days
+The guten-gutter appears to operate acceptably on all of my (modest) collection
+of downloaded Project Gutenberg texts.
 
 I'm sure there are other Gutenberg texts for which this fails.  Whence these
 are found, this script's regular expressions should be adapted to match those
