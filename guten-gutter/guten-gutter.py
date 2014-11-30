@@ -12,20 +12,21 @@ class SentinelCleaner(object):
     """Given a file-like object, gives you the lines between the start
     sentinel (exclusive) and the end sentinel (exclusive.)"""
 
-    def __init__(self, fh,
-                 start_re='^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$',
-                 end_re=r'^\**\s*END\s+OF\s+(THE\s+)?PROJECT\s+GUTENBERG.*?$',
-                 pre=None):
+    START_RE = (r'^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?'
+                '(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$')
+    END_RE = r'^\**\s*END\s+OF\s+(THE\s+)?PROJECT\s+GUTENBERG.*?$'
+
+    def __init__(self, fh, start_re=None, end_re=None):
         self.fh = fh
+        if start_re is None:
+            start_re = START_RE
         self.start_re = start_re
+        if end_re is None:
+            end_re = END_RE
         self.end_re = end_re
-        self.pre = pre
         self.state = 'pre'
 
     def lines(self):
-        if self.pre:
-            yield self.pre
-            yield ''
         for line in self.fh:
             line = line.strip()
             if self.state == 'pre':
@@ -48,8 +49,6 @@ class SentinelCleaner(object):
 
 def main(argv):
     optparser = OptionParser(__doc__)
-    optparser.add_option("--pre", default=None,
-                         help="text to add to beginning of input document")
     optparser.add_option("--output-dir", default=None,
                          help="if given, save result to this dir instead of "
                               "dumping it to standard output")
@@ -63,7 +62,7 @@ def main(argv):
             )
             out = open(out_filename, 'w')
         with open(filename, 'r') as f:
-            for line in SentinelCleaner(f, pre=options.pre).lines():
+            for line in SentinelCleaner(f).lines():
                 out.write(line + '\n')
         if out is not sys.stdout:
             out.close()
