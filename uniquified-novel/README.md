@@ -50,14 +50,33 @@ Indeed.
 Related work
 ------------
 
-This Python script has been translated to Javascript and has been made
+The uniquification process can be made to work backwards — only output each
+word if it is not seen _further up_ in the text — with the helper script
+`reverse-words.py`, like so:
+
+    $ ../guten-gutter/guten-gutter.py $GUTENBERG/pg236.txt >The_Jungle_Book.txt
+    $ ./reverse-words.py The_Jungle_Book.txt > The_Jungle_Book_Reversed.txt 
+    $ ./uniquified-novel.py The_Jungle_Book_Reversed.txt > The_Jungle_Book_Reversed_Uniquified.txt
+    $ ./reverse-words.py The_Jungle_Book_Reversed_Uniquified.txt > The_Jungle_Book_Reverse-Uniquified.txt
+
+The start of `The_Jungle_Book_Reverse-Uniquified.txt` looked like this:
+
+> JUNGLE BOOK Rudyard Kipling Contents Brothers brings byre we. Talon tush claw.
+> call! Law! Night-Song o'clock yawned, rid tips. tumbling, "Augrh!" threshold
+> whined: Chief world." Dish-licker tales, rubbish-heaps. apt forgets anyone,
+> hides mad, disgraceful creature. hydrophobia, dewanee "Enter, no," Gidur-log
+> people], choose?"
+
+while the end looked like:
+
+> THE BEASTS TOGETHER load. See our line across plain, Like a heel-rope bent
+> again, Reaching, writhing, rolling far, Sweeping all away to war! While men
+> that walk beside, Dusty, silent, heavy-eyed, Cannot tell why we or they
+> March suffer day by day. Camp are we, Serving each in his degree; Children
+> of the yoke goad, Pack harness, pad and load! 
+
+Also, this Python script has been translated to Javascript and has been made
 available online here: [Text Uniquifier](http://catseye.tc/installation/Text_Uniquifier).
 The Javascript version supports more options than this version, including
 retaining paragraph or line breaks in the output, and treating words
 case- and punctuation-insensitively.
-
-Future work
------------
-
-Allow it to work backwards -- only output a word if it does not occur further
-on in the text.  (Reverse words, uniquify, reverse again.)
