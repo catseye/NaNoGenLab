@@ -46,10 +46,15 @@ class SentinelCleaner(object):
                 pass
 
 
+class GutenbergCleaner(SentinelCleaner):
+    START_RE = r'^\**\s*START\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
+    END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
+
+
 class ProducedByCleaner(SentinelCleaner):
     START_RE = (r'^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?'
                 '(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$')
-    END_RE = r'^\**\s*END\s+OF\s+(THE\s+)?PROJECT\s+GUTENBERG.*?$'
+    END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
 
 
 def main(argv):
@@ -66,8 +71,10 @@ def main(argv):
                 options.output_dir, os.path.basename(filename)
             )
             out = open(out_filename, 'w')
+        cls = ProducedByCleaner
+        #cls = GutenbergCleaner
         with open(filename, 'r') as f:
-            for line in ProducedByCleaner(f).lines():
+            for line in cls(f).lines():
                 out.write(line + '\n')
         if out is not sys.stdout:
             out.close()
