@@ -96,7 +96,7 @@ class GutenbergCleaner(SentinelCleaner):
 
 class ProducedByCleaner(SentinelCleaner):
     START_RE = (r'^((THIS\s+)?E\-?(TEXT|BOOKS?)\s+(WAS\s+)?)?'
-                '(PRODUCED|PREPARED|TRANSCRIBED|UPDATED).*?$')
+                '(PRODUCED|PREPARED|TRANSCRIBED|UPDATED|SCANNED).*?$')
     END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
 
     def has_failed(self, original_lines, result_lines, name=''):
