@@ -11,20 +11,31 @@ import re
 import sys
 
 
-class SentinelCleaner(object):
-    """Given an iterator over lines, gives you the lines between the start
+class AbstractBaseCleaner(object):
+    """Defines the protocol for "cleaner" objects."""
+
+    def clean(self, lines, name=''):
+        """Given an iterable of lines, yield cleaned lines.  ``name'' is
+        the (optional) name of the entity being cleaned, for error-reporting
+        purposes.
+
+        Note that a file-like object is an iterable of lines.
+        """
+        raise NotImplementedError
+
+
+class SentinelCleaner(AbstractBaseCleaner):
+    """Cleans the input lines, returning only the lines between the start
     sentinel (exclusive) and the end sentinel (exclusive.)
     
     The start sentinel is actually "super-exclusive" in that neither it,
     nor any non-blank lines immediately following it, are included in
     the output.
 
-    Note that a file-like object is an iterator over lines.  Note that
-    lines produced by this cleaner are stripped of trailing whitespace.
+    Note that cleaned lines are stripped of trailing whitespace.
     """
 
-    def __init__(self, fh, start_re=None, end_re=None):
-        self.fh = fh
+    def __init__(self, start_re=None, end_re=None):
         if start_re is None:
             start_re = self.START_RE
         self.start_re = start_re
@@ -33,8 +44,8 @@ class SentinelCleaner(object):
         self.end_re = end_re
         self.state = 'pre'
 
-    def lines(self):
-        for line in self.fh:
+    def clean(self, lines, name=''):
+        for line in lines:
             line = line.rstrip()
             if self.state == 'pre':
                 match = re.match(self.start_re, line.upper())
@@ -65,27 +76,22 @@ class ProducedByCleaner(SentinelCleaner):
     END_RE = r'^\**\s*END\s+OF\s+(TH(IS|E)\s+)?PROJECT\s+GUTENBERG.*?$'
 
 
-class MultiCleaner(object):
+class MultiCleaner(AbstractBaseCleaner):
     """An object which attempts to apply multiple cleaners to an input.
     If any cleaner fails, it returns the input just previous to that
     failure.
-
-    Not fully implemented.  I'm still sketching this...
     """
-    def __init__(self, strategy=None):
-        if strategy is None:
-            strategy = (GutenbergCleaner, ProducedByCleaner)
-        self.strategy = strategy
+    def __init__(self, cleaners=None):
+        if cleaners is None:
+            cleaners = (GutenbergCleaner(), ProducedByCleaner())
+        self.cleaners = cleaners
 
-    def clean(self, fh):
-        lines = []
-        for line in fh:
-            lines.append(line.rstrip())
-
-        for cleaner_class in self.strategy:
-            cleaner = cleaner_class(lines)
-            new_lines = list(cleaner.lines())
+    def clean(self, lines, name=''):
+        lines = list(lines)
+        for cleaner in self.cleaners:
+            new_lines = list(cleaner.clean(lines, name=name))
             if not new_lines:
+                sys.stderr.write("%s failed to clean '%s'\n" % (cleaner, name))
                 break
             lines = new_lines
 
@@ -108,10 +114,9 @@ def main(argv):
                 options.output_dir, os.path.basename(filename)
             )
             out = open(out_filename, 'w')
-        cls = ProducedByCleaner
-        #cls = GutenbergCleaner
+        cleaner = MultiCleaner()
         with open(filename, 'r') as f:
-            for line in cls(f).lines():
+            for line in cleaner.clean(f, name=filename):
                 out.write(line + '\n')
         if out is not sys.stdout:
             out.close()

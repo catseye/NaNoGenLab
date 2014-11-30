@@ -27,6 +27,24 @@ Usage
 
     $ ./guten-gutter pg18613.txt > The_Golden_Scorpion.txt
 
+Theory of Operation
+-------------------
+
+Various different kinds of "cleaner" objects are defined.  The most
+conservative looks for "START OF PROJECT GUTENBERG" and "END OF PROJECT
+GUTENBERG", which all Project Gutenberg files have, and returns the lines
+between those two sentinels.  Then there are more specific cleaners, in
+particular one which looks for the "produced by" line (which varies greatly.)
+
+Then there is a cleaner which orchestrates a number of sub-cleaners.
+If a sub-cleaner results in no lines, this orchestrator considers that a
+failure, and uses the output of the previous successful cleaner as a fallback.
+
+The cleaners are implemented as iterators over input lines, but in practice,
+the orchestrator forces them to load all of the lines into memory; it needs
+to do this to detect the failure of a sub-cleaner.  In practice this should
+not be a problem on a modern machine with a modern amount of memory.
+
 History
 -------
 
@@ -42,18 +60,7 @@ Future work
 
 Some texts on which the guten-gutter currently fails are:
 
-*   Princess of Mars (no "produced" line)
 *   Around the world in 80 days
-
-I think what we should so is make the "base" cleaner more conservative and
-have it stop stripping at the "start of project gutenberg" line.  Then add a
-number of "extra" cleaners, which attempt to strip only a certain thing out
-of the text, e.g. the "produced" line.  If a cleaner results in no lines, it
-should fail (and you can use the output of the previous, more conservative
-cleaner, as a fallback.)  Of course this failure-check means it needs to take
-the "broad" approach, i.e. it's not really a good iterator anymore; it has
-to read the entire file to see if it failed or not.  In practice this should
-not be a problem.
 
 I'm sure there are other Gutenberg texts for which this fails.  Whence these
 are found, this script's regular expressions should be adapted to match those
