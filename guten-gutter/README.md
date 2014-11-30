@@ -27,10 +27,20 @@ Usage
 
     $ ./guten-gutter pg18613.txt > The_Golden_Scorpion.txt
 
+History
+-------
+
+Originally, many of the experiments in this repository were importing
+gutenizer's `gutenberg` module directly.  Most have been updated to assume
+that the input is plain text that has been, at your option, pre-cleaned by
+a tool of your choice.  The only exception is [quick-and-dirty-markov](../quick-and-dirty-markov),
+which was a "race against the clock" and it doesn't feel right to clean it
+up after the fact.
+
 Future work
 -----------
 
-Some texts on which this currently fails are:
+Some texts on which the guten-gutter currently fails are:
 
 *   Princess of Mars (no "produced" line)
 *   Around the world in 80 days
@@ -48,7 +58,3 @@ not be a problem.
 I'm sure there are other Gutenberg texts for which this fails.  Whence these
 are found, this script's regular expressions should be adapted to match those
 lines.
-
-Really, the experiments in this repository should *not* be relying themselves
-on the `gutenberg.py` module, or any cleaner; they should take a pre-cleaned
-text file as input.

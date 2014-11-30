@@ -47,12 +47,17 @@ punctuation is considered part of the word for uniqueness purposes.
 
 Indeed.
 
+Related work
+------------
+
+This Python script has been translated to Javascript and has been made
+available online here: [Text Uniquifier](http://catseye.tc/installation/Text_Uniquifier).
+The Javascript version supports more options than this version, including
+retaining paragraph or line breaks in the output, and treating words
+case- and punctuation-insensitively.
+
 Future work
 -----------
 
-Maybe clean the words of punctuation too.
-
-Make it work backwards -- only output a word if it does not occur further
+Allow it to work backwards -- only output a word if it does not occur further
 on in the text.  (Reverse words, uniquify, reverse again.)
-
-Write a version in Javascript so that it can be used in someone's web browser.
