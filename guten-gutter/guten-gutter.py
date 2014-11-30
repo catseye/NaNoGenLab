@@ -41,6 +41,15 @@ class TrailingWhitespaceCleaner(AbstractBaseCleaner):
             yield line.rstrip()
 
 
+class IllustrationCleaner(AbstractBaseCleaner):
+
+    def clean(self, lines, name=''):
+        for line in lines:
+            match = re.match(r'^\s*\[Illustration.*?\]\s*$', line)
+            if not match:
+                yield line
+
+
 class SentinelCleaner(AbstractBaseCleaner):
     """Cleans the input lines, returning only the lines between the start
     sentinel (exclusive) and the end sentinel (exclusive.)
@@ -132,6 +141,9 @@ class MultiCleaner(AbstractBaseCleaner):
 
 def main(argv):
     optparser = OptionParser(__doc__.strip())
+    optparser.add_option("--strip-illustrations", default=False,
+                         action='store_true',
+                         help="also try to remove [Illustration: foo]'s")
     optparser.add_option("--output-dir", default=None, metavar='DIR',
                          help="if given, save the resulting files to this "
                               "directory (under their original names)"
@@ -145,11 +157,14 @@ def main(argv):
                 options.output_dir, os.path.basename(filename)
             )
             out = open(out_filename, 'w')
-        cleaner = MultiCleaner((
+        cleaners = [
             TrailingWhitespaceCleaner(),
             GutenbergCleaner(),
-            ProducedByCleaner()
-        ))
+        ]
+        if options.strip_illustrations:
+            cleaners.append(IllustrationCleaner())
+        cleaners.append(ProducedByCleaner())
+        cleaner = MultiCleaner(cleaners)
         with open(filename, 'r') as f:
             for line in cleaner.clean(f, name=filename):
                 out.write(line + '\n')

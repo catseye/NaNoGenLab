@@ -14,8 +14,8 @@ downloaded from Project Gutenberg, but it's not perfect: it leaves the
 "Produced by" lines in, and fails completely on some less-standard texts.
 
 This tool attempts to be a more complete, more robust, and public domain
-replacement for it.  It is probably not as robust yet, but it works on at
-least some files.
+replacement for it.  It is probably not much more robust than the gutenizer
+yet, but it works on at least my personal collection of Gutenberg files.
 
 Requirements
 ------------
@@ -26,6 +26,14 @@ Usage
 -----
 
     $ ./guten-gutter pg18613.txt > The_Golden_Scorpion.txt
+
+You can also give the `--output-dir=DIR` option, which will place the
+cleaned version of each file in that directory, with the same name as
+the original.
+
+You can also give the `--strip-illustrations` option, which will cause
+the cleaner to strip out `[Illustration: foo]` lines.  (Doesn't yet work
+for illustration descriptions that span multiple lines.)
 
 Theory of Operation
 -------------------
