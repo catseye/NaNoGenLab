@@ -24,7 +24,7 @@ Now that NaNoGenMo 2014 has passed, the purpose of this repository is a bit
 up-in-the-air.  We may just keep using it for the purposes of continuing to
 develop the lab equipment and/or experimenting with generated text in the
 off-season.  For what it looked like at the end of NaNoGenMo 2014, see
-the tag `nanogenmo-2014-end`.
+the tag [nanogenmo-2014-end][].
 
 An experiment a day during November
 -----------------------------------
@@ -96,3 +96,4 @@ or a supply of lab materials:
 [Cat's Eye Technologies]: http://catseye.tc/
 [novel]:                  http://en.wikipedia.org/wiki/Novel
 [decided]:                https://github.com/dariusk/NaNoGenMo-2014/issues/10#issuecomment-62053420
+[nanogenmo-2014-end]:     https://github.com/catseye/NaNoGenLab/tree/nanogenmo-2014-end
