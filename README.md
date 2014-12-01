@@ -1,7 +1,7 @@
 NaNoGenLab
 ==========
 
-Herein may be found novel-generation experiments for [NaNoGenMo 2014][]
+Herein may be found novel-generation experiments for [NaNoGenMo][]
 conducted under the auspices of [Cat's Eye Technologies][].
 
 Note that the word "experiment", like the word "novel", may mean many things.
@@ -20,11 +20,17 @@ Note that the word "experiment", like the word "novel", may mean many things.
 Everything in this repository is in the public domain; see the file
 UNLICENSE in the root directory for more information.
 
+Now that NaNoGenMo 2014 has passed, the purpose of this repository is a bit
+up-in-the-air.  We may just keep using it for the purposes of continuing to
+develop the lab equipment and/or experimenting with generated text in the
+off-season.  For what it looked like at the end of NaNoGenMo 2014, see
+the tag `nanogenmo-2014-end`.
+
 An experiment a day during November
 -----------------------------------
 
 Having not come up with a really ripping idea for a novel to generate,
-I [decided][] fairly early on in November to make my goal for this NaNoGenMo
+I [decided][] fairly early on in November to make my goal for [NaNoGenMo 2014][]
 to run one little experiment per day (on average) in the generation,
 transformation, and general mutilation of text (and images, yes those too.
 See the link for more details.)
@@ -85,6 +91,7 @@ or a supply of lab materials:
 
 * generic-corpora
 
+[NaNoGenMo]:              https://github.com/dariusk/NaNoGenMo-2014
 [NaNoGenMo 2014]:         https://github.com/dariusk/NaNoGenMo-2014
 [Cat's Eye Technologies]: http://catseye.tc/
 [novel]:                  http://en.wikipedia.org/wiki/Novel
