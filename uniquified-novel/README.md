@@ -1,6 +1,8 @@
 uniquified-novel
 ================
 
+_NOTE: this processor is also available online here: [Text Uniquifier](http://catseye.tc/installation/Text_Uniquifier)_
+
 Hypothesis
 ----------
 
