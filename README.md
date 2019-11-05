@@ -1,11 +1,11 @@
 NaNoGenLab
 ==========
 
-_See also:_ [The Swallows](https://github.com/catseye/The-Swallows) (2013)
-∘ [MARYSUE](https://github.com/catseye/MARYSUE) (2015)
-∘ [2017 Entries](https://github.com/catseye/NaNoGenMo-Entries-2017)
-∘ [2018 Entries](https://github.com/catseye/NaNoGenMo-Entries-2018)
-∘ [2019 Entries](https://github.com/catseye/NaNoGenMo-Entries-2019)
+_See also:_ [The Swallows](https://github.com/catseye/The-Swallows#readme) (2013)
+∘ [MARYSUE](https://github.com/catseye/MARYSUE#readme) (2015)
+∘ [2017 Entries](https://github.com/catseye/NaNoGenMo-Entries-2017#readme)
+∘ [2018 Entries](https://github.com/catseye/NaNoGenMo-Entries-2018#readme)
+∘ [2019 Entries](https://github.com/catseye/NaNoGenMo-Entries-2019#readme)
 
 - - - -
 
